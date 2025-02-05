@@ -1,13 +1,26 @@
-import time
 import matplotlib.pyplot as plt
-import numpy as np
 
 class SortedMethods:
     def __init__(self, arr):
+        '''
+        Constructeur de la classe SortedMethods
+        param arr: list, tableau à trier  
+        '''
         self.arr = arr
         self.steps = 0
 
     def insertionSort(self):
+        '''
+        Tri par insertion
+        
+        Algorithme:
+        1. Parcourir le tableau de la gauche vers la droite
+        2. Pour chaque élément, le comparer avec les éléments précédents
+        3. Si l'élément est plus petit, le déplacer vers la gauche
+        4. Répéter les étapes 2 et 3 jusqu'à ce que l'élément soit à sa place
+
+        return: list, tableau trié
+        '''
         fig, ax = plt.subplots()
         self.steps = 0
         for i in range(1, len(self.arr)):
@@ -34,6 +47,23 @@ class SortedMethods:
         plt.show()
 
     def mergeSort(self, arr=None, left=0, right=None, ax=None):
+        '''
+        Tri fusion
+        
+        Algorithme:
+        1. Diviser le tableau en deux parties
+        2. Trier les deux parties récursivement
+        3. Fusionner les deux parties triées
+        4. Répéter les étapes 1 à 3 jusqu'à ce que le tableau soit trié
+
+        param arr: list, tableau à trier
+        param left: int, index de début du tableau
+        param right: int, index de fin du tableau
+        param ax: matplotlib.axes.Axes, objet pour afficher les étapes de tri
+
+        return: list, tableau trié
+        '''
+
         if arr is None:
             arr = self.arr
         if right is None:
@@ -50,6 +80,15 @@ class SortedMethods:
             plt.show()
 
     def merge(self, arr, left, mid, right, ax):
+        '''
+        Fusion de deux tableaux triés
+        
+        param arr: list, tableau à trier
+        param left: int, index de début du tableau
+        param mid: int, index du milieu du tableau
+        param right: int, index de fin du tableau
+        param ax: matplotlib.axes.Axes, objet pour afficher les étapes de tri
+        '''
         left_half = arr[left:mid + 1]
         right_half = arr[mid + 1:right + 1]
         
@@ -91,7 +130,25 @@ class SortedMethods:
             plt.pause(0.5)
 
     def heapSort(self):
+        '''
+        Tri par tas
+        
+        Algorithme:
+        1. Construire un tas max
+        2. Extraire les éléments un par un du tas max
+        3. Répéter les étapes 1 et 2 jusqu'à ce que le tas soit vide
+        
+        return: list, tableau trié
+        '''
         def heapify(arr, n, i, ax):
+            '''
+            Construction d'un tas max
+            
+            param arr: list, tableau à trier
+            param n: int, taille du tas
+            param i: int, index de l'élément à traiter
+            param ax: matplotlib.axes.Axes, objet pour afficher les étapes de tri
+            '''
             largest = i
             left = 2 * i + 1
             right = 2 * i + 2
@@ -126,6 +183,21 @@ class SortedMethods:
         plt.show()
     
     def quickSort(self, low=0, high=None, ax=None):
+        '''
+        Tri rapide
+        
+        Algorithme:
+        1. Choisir un élément pivot
+        2. Partitionner le tableau autour du pivot
+        3. Trier les deux parties récursivement
+        
+        param low: int, index de début du tableau
+        param high: int, index de fin du tableau
+        param ax: matplotlib.axes.Axes, objet pour afficher les étapes de tri
+        
+        return: list, tableau trié
+        '''
+
         if high is None:
             high = len(self.arr) - 1
             fig, ax = plt.subplots()
@@ -139,6 +211,15 @@ class SortedMethods:
             plt.show()
     
     def partition(self, low, high, ax):
+        '''
+        Partitionnement du tableau autour du pivot
+        
+        param low: int, index de début du tableau
+        param high: int, index de fin du tableau
+        param ax: matplotlib.axes.Axes, objet pour afficher les étapes de tri
+        
+        return: int, index du pivot
+        '''
         pivot = self.arr[high]
         i = low - 1
         
