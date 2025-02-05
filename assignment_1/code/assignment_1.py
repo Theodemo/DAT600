@@ -8,6 +8,17 @@ class SortedMethods:
         self.visualization = visualization
 
     def insertionSort(self):
+        '''
+        Tri par insertion
+        
+        Algorithme:
+        1. Parcourir le tableau de la gauche vers la droite
+        2. Pour chaque élément, le comparer avec les éléments précédents
+        3. Si l'élément est plus petit, le déplacer vers la gauche
+        4. Répéter les étapes 2 et 3 jusqu'à ce que l'élément soit à sa place
+
+        return: list, tableau trié
+        '''
         if self.visualization:
             fig, ax = plt.subplots()
         self.steps = 0
