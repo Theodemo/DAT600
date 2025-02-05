@@ -1,27 +1,15 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 class SortedMethods:
-    def __init__(self, arr):
-        '''
-        Constructeur de la classe SortedMethods
-        param arr: list, tableau à trier  
-        '''
-        self.arr = arr
+    def __init__(self, number_of_elements, visualization):
+        self.arr = np.random.randint(1, 100, number_of_elements)
         self.steps = 0
+        self.visualization = visualization
 
     def insertionSort(self):
-        '''
-        Tri par insertion
-        
-        Algorithme:
-        1. Parcourir le tableau de la gauche vers la droite
-        2. Pour chaque élément, le comparer avec les éléments précédents
-        3. Si l'élément est plus petit, le déplacer vers la gauche
-        4. Répéter les étapes 2 et 3 jusqu'à ce que l'élément soit à sa place
-
-        return: list, tableau trié
-        '''
-        fig, ax = plt.subplots()
+        if self.visualization:
+            fig, ax = plt.subplots()
         self.steps = 0
         for i in range(1, len(self.arr)):
             key = self.arr[i]
@@ -30,22 +18,17 @@ class SortedMethods:
             while j >= 0 and key < self.arr[j]:
                 self.arr[j + 1] = self.arr[j]
                 j -= 1
-                self.steps += 1  # Comptage des comparaisons et déplacements
-                
-                ax.clear()
-                ax.bar(range(len(self.arr)), self.arr, color='blue')
-                ax.set_title(f"Step {self.steps}")
-                plt.pause(0.5)
-            
-            self.arr[j + 1] = key
-            self.steps += 1  # Pour l'insertion du key
-            
-            ax.clear()
-            ax.bar(range(len(self.arr)), self.arr, color='blue')
-            ax.set_title(f"Étape {self.steps}")
-            plt.pause(0.5)
-        plt.show()
+                self.steps += 1  
+                if self.visualization:
+                    self._update_plot(ax)
 
+            self.arr[j + 1] = key
+            self.steps += 1  
+            if self.visualization:
+                self._update_plot(ax)
+
+        if self.visualization:
+            plt.show()
     def mergeSort(self, arr=None, left=0, right=None, ax=None):
         '''
         Tri fusion
@@ -68,7 +51,8 @@ class SortedMethods:
             arr = self.arr
         if right is None:
             right = len(arr) - 1
-            fig, ax = plt.subplots()
+            if self.visualization:
+                fig, ax = plt.subplots()
         
         if left < right:
             mid = (left + right) // 2
@@ -77,7 +61,8 @@ class SortedMethods:
             self.merge(arr, left, mid, right, ax)
         
         if left == 0 and right == len(arr) - 1:
-            plt.show()
+            if self.visualization:
+                plt.show()
 
     def merge(self, arr, left, mid, right, ax):
         '''
@@ -87,7 +72,7 @@ class SortedMethods:
         param left: int, index de début du tableau
         param mid: int, index du milieu du tableau
         param right: int, index de fin du tableau
-        param ax: matplotlib.axes.Axes, objet pour afficher les étapes de tri
+        param ax: matplotlib.axes.Axes, objet pour afficher les étapes de tri       
         '''
         left_half = arr[left:mid + 1]
         right_half = arr[mid + 1:right + 1]
@@ -104,103 +89,106 @@ class SortedMethods:
                 j += 1
             k += 1
             self.steps += 1
-            ax.clear()
-            ax.bar(range(len(self.arr)), self.arr, color='blue')
-            ax.set_title(f"Étape {self.steps}")
-            plt.pause(0.5)
+            if self.visualization:
+                ax.clear()
+                ax.bar(range(len(self.arr)), self.arr, color='blue')
+                ax.set_title(f"Étape {self.steps}")
+                plt.pause(1*10**-3)
         
         while i < len(left_half):
             arr[k] = left_half[i]
             i += 1
             k += 1
             self.steps += 1
-            ax.clear()
-            ax.bar(range(len(self.arr)), self.arr, color='blue')
-            ax.set_title(f"Étape {self.steps}")
-            plt.pause(0.5)
+            if self.visualization:
+                ax.clear()
+                ax.bar(range(len(self.arr)), self.arr, color='blue')
+                ax.set_title(f"Étape {self.steps}")
+                plt.pause(1*10**-3)
         
         while j < len(right_half):
             arr[k] = right_half[j]
             j += 1
             k += 1
             self.steps += 1
-            ax.clear()
-            ax.bar(range(len(self.arr)), self.arr, color='blue')
-            ax.set_title(f"Étape {self.steps}")
-            plt.pause(0.5)
+            if self.visualization:
+                ax.clear()
+                ax.bar(range(len(self.arr)), self.arr, color='blue')
+                ax.set_title(f"Étape {self.steps}")
+                plt.pause(1*10**-3)
 
     def heapSort(self):
         '''
         Tri par tas
         
         Algorithme:
-        1. Construire un tas max
-        2. Extraire les éléments un par un du tas max
+        1. Créer un tas max
+        2. Extraire l'élément racine (le plus grand) et le placer à la fin
         3. Répéter les étapes 1 et 2 jusqu'à ce que le tas soit vide
         
         return: list, tableau trié
         '''
-        def heapify(arr, n, i, ax):
-            '''
-            Construction d'un tas max
-            
-            param arr: list, tableau à trier
-            param n: int, taille du tas
-            param i: int, index de l'élément à traiter
-            param ax: matplotlib.axes.Axes, objet pour afficher les étapes de tri
-            '''
-            largest = i
-            left = 2 * i + 1
-            right = 2 * i + 2
-            
-            if left < n and arr[left] > arr[largest]:
-                largest = left
-            
-            if right < n and arr[right] > arr[largest]:
-                largest = right
-            
-            if largest != i:
-                arr[i], arr[largest] = arr[largest], arr[i]
-                self.steps += 1
-                ax.clear()
-                ax.bar(range(len(arr)), arr, color='blue')
-                ax.set_title(f"Étape {self.steps}")
-                plt.pause(0.5)
-                heapify(arr, n, largest, ax)
-        
-        fig, ax = plt.subplots()
+        if self.visualization:
+            fig, ax = plt.subplots()
         n = len(self.arr)
         for i in range(n // 2 - 1, -1, -1):
-            heapify(self.arr, n, i, ax)
+            # Appel de heapify avec ax seulement si la visualisation est activée
+            self.heapify(n, i, ax if self.visualization else None)
         for i in range(n - 1, 0, -1):
             self.arr[i], self.arr[0] = self.arr[0], self.arr[i]
             self.steps += 1
-            ax.clear()
-            ax.bar(range(len(self.arr)), self.arr, color='blue')
-            ax.set_title(f"Étape {self.steps}")
-            plt.pause(0.5)
-            heapify(self.arr, i, 0, ax)
-        plt.show()
-    
+            if self.visualization:
+                self._update_plot(ax)
+            self.heapify(i, 0, ax if self.visualization else None)
+        if self.visualization:
+            plt.show()
+
+    def heapify(self, n, i, ax=None):
+        '''
+        Créer un tas max
+        
+        param n: int, taille du tas
+        param i: int, index du noeud racine
+        param ax: matplotlib.axes.Axes, objet pour afficher les étapes de tri
+        
+        return: None
+        '''
+        largest = i
+        left = 2 * i + 1
+        right = 2 * i + 2
+
+        if left < n and self.arr[left] > self.arr[largest]:
+            largest = left
+        if right < n and self.arr[right] > self.arr[largest]:
+            largest = right
+        if largest != i:
+            self.arr[i], self.arr[largest] = self.arr[largest], self.arr[i]
+            self.steps += 1
+            if ax is not None:  # Mise à jour du graphique seulement si ax est défini
+                self._update_plot(ax)
+            self.heapify(n, largest, ax)
+
+
     def quickSort(self, low=0, high=None, ax=None):
         '''
         Tri rapide
         
         Algorithme:
-        1. Choisir un élément pivot
-        2. Partitionner le tableau autour du pivot
+        1. Choisir un élément comme pivot
+        2. Placer tous les éléments plus petits que le pivot à gauche et les éléments plus grands à droite
         3. Trier les deux parties récursivement
         
         param low: int, index de début du tableau
         param high: int, index de fin du tableau
         param ax: matplotlib.axes.Axes, objet pour afficher les étapes de tri
-        
+
         return: list, tableau trié
         '''
 
         if high is None:
             high = len(self.arr) - 1
-            fig, ax = plt.subplots()
+            if self.visualization:
+                fig, ax = plt.subplots()
         
         if low < high:
             pi = self.partition(low, high, ax)
@@ -208,11 +196,12 @@ class SortedMethods:
             self.quickSort(pi + 1, high, ax)
         
         if low == 0 and high == len(self.arr) - 1:
-            plt.show()
-    
+            if self.visualization:
+                plt.show()
+
     def partition(self, low, high, ax):
         '''
-        Partitionnement du tableau autour du pivot
+        Partitionnement du tableau
         
         param low: int, index de début du tableau
         param high: int, index de fin du tableau
@@ -222,33 +211,75 @@ class SortedMethods:
         '''
         pivot = self.arr[high]
         i = low - 1
-        
         for j in range(low, high):
             if self.arr[j] < pivot:
                 i += 1
                 self.arr[i], self.arr[j] = self.arr[j], self.arr[i]
                 self.steps += 1
-                ax.clear()
-                ax.bar(range(len(self.arr)), self.arr, color='blue')
-                ax.set_title(f"Étape {self.steps}")
-                plt.pause(0.5)
-        
+                if self.visualization:
+                    self._update_plot(ax)
+
         self.arr[i + 1], self.arr[high] = self.arr[high], self.arr[i + 1]
         self.steps += 1
-        ax.clear()
-        ax.bar(range(len(self.arr)), self.arr, color='blue')
-        ax.set_title(f"Étape {self.steps}")
-        plt.pause(0.5)
+        if self.visualization:
+            self._update_plot(ax)
+        
         return i + 1
 
     def printArray(self):
         print("Tableau trié:", " ".join(map(str, self.arr)))
 
+    def plotComplexity(self, sort_method, sizes):
+        '''
+        Tracer la complexité du temps d'exécution
+        
+        param sort_method: fonction, méthode de tri
+        param sizes: list, tailles de tableau à tester
+
+        return: None
+        '''
+        previous_visualization = self.visualization
+        self.visualization = False  # Désactiver la visualisation pour ne pas ralentir la complexité
+        step_counts = []
+        for size in sizes:
+            self.arr = np.random.randint(1, 100, size)
+            self.steps = 0
+            sort_method()
+            step_counts.append(self.steps)
+        
+        self.visualization = previous_visualization  # Restaurer la visualisation
+
+        plt.figure()
+        plt.plot(sizes, step_counts, marker='o', linestyle='-', color='r')
+        plt.xlabel("Taille d'entrée (n)")
+        plt.ylabel("Nombre d'étapes")
+        plt.title(f"Complexité du {sort_method.__name__}")
+        plt.grid()
+        plt.show()
+
+    def _update_plot(self, ax):
+        '''
+        Mise à jour du graphique pour la visualisation
+        
+        param ax: matplotlib.axes.Axes, objet pour afficher les étapes de tri
+        '''
+        ax.clear()
+        ax.bar(range(len(self.arr)), self.arr, color='blue')
+        ax.set_title(f"Étape {self.steps}")
+        plt.pause(1 * 10**-3)
+
 if __name__ == "__main__":
-    arr = [12, 11, 13, 5, 6]
-    ob = SortedMethods(arr)
-    #ob.mergeSort()
-    #ob.heapSort()
-    ob.quickSort()
+    ob = SortedMethods(100, visualization=True)
     #ob.insertionSort()
     #ob.printArray()
+    #ob.mergeSort()
+    #ob.printArray()
+    #ob.heapSort()
+    #ob.printArray()
+    #ob.quickSort()
+    #ob.printArray()
+    sizes = [10, 20, 50]
+    ob.plotComplexity(ob.heapSort, sizes)
+    ob.plotComplexity(ob.insertionSort, sizes)
+    ob.plotComplexity(ob.mergeSort, sizes)
+    ob.plotComplexity(ob.quickSort, sizes)
