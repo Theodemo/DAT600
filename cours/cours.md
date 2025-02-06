@@ -851,6 +851,83 @@ Les arbres et graphes sont utilisés dans de nombreux domaines :
 - **Transport** : planification des itinéraires.
 - **Web** : structure des liens entre les pages (PageRank de Google).
 
----
+## 5.3. Algorithmes de tri (tri fusion, rapide, tas, etc.)
 
-Cette section couvre les bases des arbres et graphes en insistant sur leurs définitions, représentations et parcours. Elle peut être enrichie avec des exemples plus détaillés ou des algorithmes spécifiques si besoin ! 🚀
+Les algorithmes de tri sont essentiels en informatique, car ils permettent de réorganiser les éléments d'un tableau ou d'une liste selon un ordre donné (croissant ou décroissant). Plusieurs algorithmes existent, chacun ayant ses propres caractéristiques en termes de complexité temporelle et d'usage. Voici les algorithmes les plus utilisés :
+
+### 1. Tri par fusion (Merge Sort)
+Le tri par fusion est un algorithme de tri basé sur le paradigme "Diviser pour régner". Il divise récursivement le tableau en sous-tableaux de plus en plus petits jusqu'à obtenir des sous-tableaux de taille 1 (qui sont déjà triés). Ensuite, il fusionne les sous-tableaux triés pour obtenir le tableau final trié.
+
+#### Complexité :
+- **Complexité temporelle** : O(n log n)
+- **Complexité spatiale** : O(n) (en raison de la mémoire supplémentaire utilisée pour stocker les sous-tableaux)
+
+#### Fonctionnement :
+1. Diviser le tableau en deux moitiés.
+2. Trier chaque moitié récursivement.
+3. Fusionner les deux moitiés triées pour obtenir un tableau trié.
+
+### 2. Tri rapide (Quick Sort)
+Le tri rapide est également un algorithme de tri "Diviser pour régner". Il sélectionne un "pivot" dans le tableau, partitionne le tableau en deux sous-tableaux (un avec des éléments plus petits que le pivot et l'autre avec des éléments plus grands) et trie ces sous-tableaux de manière récursive.
+
+#### Complexité :
+- **Complexité temporelle moyenne** : O(n log n)
+- **Complexité temporelle dans le pire cas** : O(n²) (cela peut être évité en choisissant un bon pivot)
+- **Complexité spatiale** : O(log n) en moyenne
+
+#### Fonctionnement :
+1. Choisir un pivot dans le tableau.
+2. Partitionner le tableau en fonction du pivot (les éléments plus petits que le pivot à gauche et les plus grands à droite).
+3. Trier récursivement les sous-tableaux à gauche et à droite du pivot.
+
+### 3. Tri par tas (Heap Sort)
+Le tri par tas utilise une structure de données appelée "tas" (ou "heap"). Un tas est un arbre binaire complet qui satisfait à la propriété de tas (le parent est plus grand ou plus petit que ses enfants, selon que l'on utilise un tas maximum ou minimum). Le tri par tas transforme d'abord le tableau en un tas, puis extrait les éléments un à un en ajustant le tas à chaque extraction.
+
+#### Complexité :
+- **Complexité temporelle** : O(n log n)
+- **Complexité spatiale** : O(1)
+
+#### Fonctionnement :
+1. Convertir le tableau en un tas.
+2. Extraire l'élément racine du tas (le plus grand ou le plus petit) et le placer à la fin du tableau.
+3. Réajuster le tas et répéter jusqu'à ce que tous les éléments soient triés.
+
+### 4. Tri par insertion (Insertion Sort)
+Le tri par insertion est un algorithme simple où les éléments sont insérés un à un dans une portion triée du tableau. L'élément actuel est comparé avec les éléments déjà triés et est inséré à la bonne position.
+
+#### Complexité :
+- **Complexité temporelle dans le pire cas** : O(n²)
+- **Complexité temporelle dans le meilleur cas** : O(n) (lorsque le tableau est déjà trié)
+- **Complexité spatiale** : O(1)
+
+#### Fonctionnement :
+1. Commencer avec un tableau vide.
+2. Parcourir le tableau et insérer chaque élément dans la partie triée du tableau en décalant les éléments nécessaires.
+
+### 5. Tri par sélection (Selection Sort)
+Le tri par sélection fonctionne en sélectionnant successivement l'élément le plus petit (ou le plus grand) dans la portion non triée du tableau et en l'échangeant avec l'élément en début de la portion non triée.
+
+#### Complexité :
+- **Complexité temporelle** : O(n²)
+- **Complexité spatiale** : O(1)
+
+#### Fonctionnement :
+1. Trouver l'élément le plus petit dans le tableau non trié.
+2. L'échanger avec le premier élément du tableau non trié.
+3. Répéter ce processus pour chaque position du tableau.
+
+### 6. Tri Shell (Shell Sort)
+Le tri Shell est une amélioration du tri par insertion. Il permet de trier les éléments en utilisant une séquence de pas (gap) et en insérant les éléments dans des sous-listes définies par ces pas. Cela permet d'améliorer les performances par rapport au tri par insertion classique.
+
+#### Complexité :
+- **Complexité temporelle** : Varie en fonction de la séquence des pas, mais peut être O(n^(3/2)) ou O(n log² n) dans le meilleur des cas.
+- **Complexité spatiale** : O(1)
+
+#### Fonctionnement :
+1. Sélectionner une séquence de pas.
+2. Trier les éléments en utilisant ces pas, en insérant dans des sous-listes définies par les pas.
+3. Réduire progressivement les pas jusqu'à atteindre 1, ce qui revient au tri par insertion classique.
+
+### Conclusion
+Les algorithmes de tri sont des outils fondamentaux en informatique, et le choix de l'algorithme dépend du contexte (taille du tableau, structure des données, etc.). Les algorithmes comme le tri fusion et le tri rapide sont largement utilisés en raison de leur efficacité, tandis que des algorithmes comme le tri par insertion et le tri par sélection peuvent être utiles pour de petites tailles de données ou des cas particuliers.
+
