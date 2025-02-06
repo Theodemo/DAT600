@@ -785,3 +785,72 @@ Une **file** suit le principe **FIFO** (*First In, First Out*), où le premier �
 ---
 
 Dans les sections suivantes, nous explorerons d’autres structures de données avancées comme les **arbres** et les **graphes**, ainsi que leurs algorithmes associés.
+## 5.2. Arbres et Graphes
+
+### 5.2.1. Définition et Terminologie
+
+Un **graphe** est une structure composée de **sommets** (ou nœuds) et d'**arêtes** (ou arcs) reliant ces sommets. On distingue plusieurs types de graphes :
+
+- **Graphe orienté** : les arêtes ont une direction.
+- **Graphe non orienté** : les arêtes n'ont pas de direction.
+- **Graphe pondéré** : chaque arête est associée à un poids.
+- **Graphe connexe** : il existe un chemin entre chaque paire de sommets.
+
+Un **arbre** est un cas particulier de graphe :
+
+- C'est un graphe acyclique connexe.
+- Un arbre avec \( n \) sommets possède exactement \( n-1 \) arêtes.
+- Il possède une hiérarchie avec un sommet racine (dans le cas d'un arbre enraciné).
+
+### 5.2.2. Représentation des Graphes
+
+Il existe plusieurs manières de représenter un graphe en informatique :
+
+1. **Liste d’adjacence** : chaque sommet est associé à une liste de ses voisins.
+2. **Matrice d’adjacence** : une matrice \( n \times n \) où la case \( (i, j) \) indique la présence ou l'absence d'une arête entre les sommets \( i \) et \( j \).
+
+Exemple d’une liste d’adjacence pour un graphe non orienté :
+
+```
+1 → [2, 3]
+2 → [1, 4]
+3 → [1, 4]
+4 → [2, 3]
+```
+
+### 5.2.3. Parcours des Graphes
+
+Les algorithmes de parcours permettent d’explorer un graphe :
+
+- **Parcours en largeur (BFS - Breadth-First Search)** : explore les sommets niveau par niveau.
+- **Parcours en profondeur (DFS - Depth-First Search)** : explore les sommets en profondeur avant de revenir en arrière.
+
+#### Implémentation du BFS en Python
+
+```python
+from collections import deque
+
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+    
+    while queue:
+        node = queue.popleft()
+        if node not in visited:
+            print(node, end=" ")
+            visited.add(node)
+            queue.extend(graph[node])
+```
+
+### 5.2.4. Applications des Graphes et Arbres
+
+Les arbres et graphes sont utilisés dans de nombreux domaines :
+
+- **Informatique** : modélisation des réseaux, intelligence artificielle.
+- **Bioinformatique** : classification phylogénétique.
+- **Transport** : planification des itinéraires.
+- **Web** : structure des liens entre les pages (PageRank de Google).
+
+---
+
+Cette section couvre les bases des arbres et graphes en insistant sur leurs définitions, représentations et parcours. Elle peut être enrichie avec des exemples plus détaillés ou des algorithmes spécifiques si besoin ! 🚀
