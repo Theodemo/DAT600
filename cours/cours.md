@@ -362,3 +362,426 @@ Un problème est **NP-dur** s’il est **au moins aussi difficile** que les prob
 
 ### 3.3.7. Conclusion
 L’étude de ces classes de complexité est cruciale pour comprendre la difficulté intrinsèque des problèmes et déterminer s’ils sont solubles efficacement. La question **P = NP** reste l’un des plus grands mystères en mathématiques et en informatique théorique.
+
+## 3.4. Réduction polynomiale et problèmes NP-complets
+
+### 3.4.1. Définition de la réduction polynomiale
+La **réduction polynomiale** est une technique utilisée en théorie de la complexité pour comparer la difficulté des problèmes algorithmiques. Un problème \( A \) est dit **réductible polynomialement** à un problème \( B \) (noté \( A \leq_P B \)) s'il existe une fonction \( f \) calculable en temps polynomial telle que :
+
+\[ x \in A \iff f(x) \in B \]
+
+Cela signifie que si nous savons résoudre \( B \) efficacement, alors nous pouvons également résoudre \( A \) en transformant ses instances en instances de \( B \) via \( f \).
+
+### 3.4.2. Importance de la réduction polynomiale
+La réduction polynomiale joue un rôle crucial dans la classification des problèmes en **NP-complets**. Pour montrer qu'un problème est NP-complet, il faut :
+
+1. Montrer qu'il appartient à la classe NP (on peut vérifier une solution en temps polynomial).
+2. Montrer qu'un problème déjà connu comme NP-complet peut être réduit polynomialement à ce problème.
+
+Si ces deux conditions sont satisfaites, alors le problème est aussi difficile que tous les autres problèmes NP-complets.
+
+### 3.4.3. Exemples de problèmes NP-complets
+Voici quelques problèmes classiques prouvés NP-complets via réduction polynomiale :
+
+- **Problème du voyageur de commerce (TSP) :** Donnée une liste de villes et les distances entre elles, trouver le plus court chemin qui visite chaque ville exactement une fois et revient au point de départ.
+- **Problème de la couverture de sommets :** Trouver un sous-ensemble minimal de sommets couvrant toutes les arêtes d'un graphe.
+- **Problème de la satisfaction booléenne (SAT) :** Trouver une affectation des variables qui satisfait une formule booléenne donnée.
+- **Problème du sac à dos (Knapsack) :** Sélectionner des objets avec une valeur et un poids, de sorte à maximiser la valeur totale sans dépasser une capacité donnée.
+
+### 3.4.4. Conséquences et impact
+La notion de réduction polynomiale est essentielle car elle permet d'identifier des problèmes difficiles en pratique. Si un problème est NP-complet, alors sauf si **P = NP**, il n'existe pas d'algorithme en temps polynomial pour le résoudre dans le cas général. 
+
+Cela guide la recherche vers des approches alternatives comme :
+- **Heuristiques** : Algorithmes qui donnent des solutions approximatives en un temps raisonnable.
+- **Algorithmes d'approximation** : Garantissent une solution proche de l’optimum avec une borne sur l’erreur.
+- **Méthodes exactes exponentielles** : Comme la programmation dynamique et le branch-and-bound.
+
+### 3.4.5. Conclusion
+La réduction polynomiale est un outil fondamental en informatique théorique. Elle permet d'identifier des problèmes difficiles et de mieux comprendre la structure de la classe NP. Si un jour un algorithme polynomial est découvert pour un problème NP-complet, alors **P = NP**, ce qui révolutionnerait l'informatique et la cryptographie !
+
+# 4. Paradigmes Algorithmiques
+
+Les **paradigmes algorithmiques** sont des stratégies générales utilisées pour concevoir des algorithmes efficaces. Ils permettent de résoudre une large gamme de problèmes en adoptant des approches spécifiques adaptées à la structure du problème. Parmi les paradigmes les plus connus, on retrouve :
+
+- **Diviser pour régner**  
+- **Programmation dynamique**  
+- **Algorithmes gloutons**  
+- **Retour sur trace (Backtracking)**  
+- **Recherche locale et heuristiques**  
+
+Nous allons explorer en détail le premier paradigme : **Diviser pour régner**.
+
+---
+
+## 4.1. Diviser pour régner
+
+Le paradigme **Diviser pour régner** (Divide and Conquer) consiste à résoudre un problème en le décomposant en sous-problèmes plus petits, en résolvant ces sous-problèmes de manière récursive, puis en combinant leurs solutions pour obtenir la solution globale.
+
+### Principe général
+
+Un algorithme basé sur **Diviser pour régner** suit généralement trois étapes :
+
+1. **Diviser** : Le problème est divisé en plusieurs sous-problèmes plus petits (généralement de taille équivalente).  
+2. **Régner** : Les sous-problèmes sont résolus de manière récursive.  
+3. **Combiner** : Les solutions des sous-problèmes sont fusionnées pour obtenir la solution finale.
+
+### Complexité et analyse
+
+Si nous notons :
+- **T(n)** : le temps d'exécution de l'algorithme pour un problème de taille **n**,
+- **a** : le nombre de sous-problèmes créés à chaque étape,
+- **b** : le facteur par lequel la taille des sous-problèmes est réduite,
+
+alors la complexité suit généralement la **récurrence de Master** :
+
+\[
+T(n) = aT(n/b) + f(n)
+\]
+
+où **f(n)** représente le coût du travail effectué en dehors des appels récursifs (par exemple, la fusion des solutions).
+
+### Exemples d'algorithmes utilisant ce paradigme
+
+- **Tri fusion (Merge Sort)**  
+  - Divise le tableau en deux sous-tableaux de tailles égales.
+  - Trie récursivement chaque sous-tableau.
+  - Fusionne les sous-tableaux triés.
+  - Complexité : **O(n log n)**.
+
+- **Tri rapide (Quick Sort)**  
+  - Choisit un pivot et partitionne le tableau en deux sous-tableaux.
+  - Trie récursivement les sous-tableaux.
+  - Complexité moyenne : **O(n log n)** (pire cas **O(n²)**).
+
+- **Recherche dichotomique (Binary Search)**  
+  - Divise le tableau en deux parties égales.
+  - Vérifie si l'élément recherché est dans la première ou la seconde moitié.
+  - Réduit la taille du problème par un facteur **2** à chaque étape.
+  - Complexité : **O(log n)**.
+
+- **Algorithme de Strassen (multiplication de matrices)**  
+  - Décompose la multiplication de matrices en 7 multiplications de sous-matrices au lieu de 8.
+  - Complexité : **O(n^{2.81})**, améliorant l'algorithme naïf **O(n³)**.
+
+---
+
+### Avantages et inconvénients
+
+✅ **Avantages :**  
+- Efficace pour les problèmes récursifs.  
+- Permet des solutions optimisées avec une complexité logarithmique ou quasi-linéaire.  
+- Exploite bien la parallélisation.
+
+❌ **Inconvénients :**  
+- Peut entraîner un **coût en mémoire élevé** dû aux appels récursifs et au stockage temporaire des sous-problèmes.  
+- Le choix d'une bonne stratégie de division est essentiel pour l'efficacité.  
+
+---
+
+Le paradigme **Diviser pour régner** est une technique puissante utilisée dans de nombreux algorithmes de tri, de recherche et d'optimisation. D'autres paradigmes comme la **programmation dynamique** ou les **algorithmes gloutons** offrent des alternatives selon la nature du problème.
+
+## 4.2. Programmation Dynamique
+
+### 1. Introduction à la Programmation Dynamique
+
+La **programmation dynamique** est une technique d'optimisation qui permet de résoudre des problèmes en les décomposant en sous-problèmes plus petits et en stockant les résultats intermédiaires pour éviter des calculs redondants. Elle est particulièrement utile lorsque les sous-problèmes se répètent dans le processus de résolution.
+
+### 2. Principe Fondamental
+
+Un problème peut être résolu par programmation dynamique si :
+- Il possède une **structure optimale** : une solution optimale du problème global est composée de solutions optimales des sous-problèmes.
+- Il présente une **redondance des sous-problèmes** : les mêmes sous-problèmes apparaissent plusieurs fois.
+
+### 3. Approches de la Programmation Dynamique
+
+Il existe deux approches principales :
+
+#### a) **Approche Top-Down (Mémoïsation)**
+Cette approche repose sur la récursivité avec stockage des résultats des sous-problèmes déjà calculés. Cela évite de recalculer les mêmes sous-problèmes plusieurs fois.
+
+**Exemple : Fibonacci avec mémoïsation**
+```python
+# Implémentation en Python avec mémoïsation
+def fibonacci(n, memo={}):
+    if n in memo:
+        return memo[n]
+    if n <= 1:
+        return n
+    memo[n] = fibonacci(n-1, memo) + fibonacci(n-2, memo)
+    return memo[n]
+
+print(fibonacci(10))  # Résultat : 55
+```
+
+#### b) **Approche Bottom-Up (Tabulation)**
+L'approche bottom-up consiste à résoudre les sous-problèmes en premier, puis à construire progressivement la solution finale.
+
+**Exemple : Fibonacci avec tabulation**
+```python
+# Implémentation en Python avec tabulation
+def fibonacci(n):
+    if n <= 1:
+        return n
+    fib = [0, 1]
+    for i in range(2, n + 1):
+        fib.append(fib[i-1] + fib[i-2])
+    return fib[n]
+
+print(fibonacci(10))  # Résultat : 55
+```
+
+### 4. Exemples Classiques de Programmation Dynamique
+
+#### a) **Problème du Sac à Dos (0/1 Knapsack)**
+Un voleur a un sac d'une certaine capacité et doit choisir des objets avec des valeurs et des poids différents afin d'obtenir la valeur maximale sans dépasser la capacité du sac.
+
+#### b) **Plus Longue Sous-Séquence Commune (LCS - Longest Common Subsequence)**
+Ce problème consiste à trouver la plus longue sous-séquence commune entre deux chaînes de caractères.
+
+#### c) **Problème du Rendu de Monnaie**
+Trouver le nombre minimal de pièces pour donner une somme spécifique en utilisant des pièces de valeurs données.
+
+### 5. Complexité et Optimisation
+
+L'utilisation de la programmation dynamique permet souvent de réduire la complexité exponentielle à une complexité polynomiale. Cependant, il faut faire attention à la consommation mémoire. Des techniques comme la **programmation dynamique en espace optimisé** permettent de réduire l'utilisation de mémoire en stockant uniquement les résultats nécessaires.
+
+### 6. Conclusion
+
+La programmation dynamique est un outil puissant pour résoudre une large gamme de problèmes en informatique. Bien que son implémentation nécessite une analyse approfondie des sous-problèmes et de la structure optimale, elle permet d'obtenir des solutions efficaces en optimisant les performances computationnelles.
+
+## 4.3. Algorithmes Gloutons
+
+### Définition
+Un **algorithme glouton** (ou **greedy algorithm**) est une stratégie algorithmique qui fait des choix successifs en sélectionnant, à chaque étape, l'option qui semble être la meilleure à court terme, sans tenir compte des conséquences futures.
+
+### Principe de fonctionnement
+L'approche gloutonne suit généralement ces étapes :
+1. **Sélection d’un choix optimal localement** : choisir la meilleure option immédiate disponible.
+2. **Vérification de la faisabilité** : s'assurer que le choix respecte les contraintes du problème.
+3. **Construction progressive d’une solution** : répéter le processus jusqu'à obtenir une solution complète.
+
+### Conditions d’applicabilité
+Un algorithme glouton donne une solution optimale uniquement si le problème satisfait **l’une des deux propriétés suivantes** :
+- **Propriété de sous-structure optimale** : une solution optimale du problème global peut être obtenue à partir de solutions optimales de sous-problèmes.
+- **Propriété du choix glouton** : un choix optimal local conduit toujours à une solution optimale globale.
+
+Si ces conditions ne sont pas remplies, l’algorithme peut produire une solution sous-optimale.
+
+### Exemples d’algorithmes gloutons
+
+#### 1. **Problème du rendu de monnaie**
+L’objectif est de rendre une somme donnée avec le moins de pièces possible. Un algorithme glouton choisit à chaque étape la pièce de plus grande valeur disponible.
+
+**Exemple en euros :**
+- Somme à rendre : 63 centimes
+- Pièces disponibles : {50, 20, 10, 5, 2, 1} centimes
+- Solution gloutonne : 50 + 10 + 2 + 1 (4 pièces)
+
+⚠️ **Attention** : Cet algorithme ne fonctionne pas toujours pour des systèmes monétaires où des combinaisons non triviales donnent un meilleur résultat.
+
+#### 2. **Problème du sac à dos fractionnaire (Knapsack Fractionnaire)**
+- Un voleur doit choisir des objets à mettre dans un sac à dos de capacité limitée.
+- Chaque objet a un poids et une valeur.
+- L’objectif est de maximiser la valeur totale des objets dans le sac.
+- Un algorithme glouton prend toujours l’objet ayant **le meilleur rapport valeur/poids** en premier.
+- Pour le cas fractionnaire (où l’on peut prendre une partie d’un objet), la solution gloutonne est **optimale**.
+
+#### 3. **Algorithme de Dijkstra**
+L’algorithme de Dijkstra, utilisé pour trouver le plus court chemin dans un graphe pondéré, suit une approche gloutonne en choisissant **le sommet ayant la plus petite distance courante**.
+
+#### 4. **Algorithme de Prim**
+L’algorithme de Prim construit un **arbre couvrant minimal** en ajoutant à chaque étape l’arête de plus faible poids connectant un nouveau sommet à l’arbre en construction.
+
+### Avantages et inconvénients
+✅ **Avantages**
+- Facile à comprendre et implémenter.
+- Rapide et efficace pour certains problèmes.
+- Fonctionne bien lorsque les propriétés optimales sont vérifiées.
+
+❌ **Inconvénients**
+- Ne garantit pas toujours une solution optimale.
+- Peut nécessiter une preuve formelle pour vérifier sa validité.
+- Certains problèmes nécessitent une approche plus avancée comme la programmation dynamique.
+
+### Conclusion
+Les algorithmes gloutons sont puissants pour certains types de problèmes mais ne sont pas universellement applicables. Ils sont souvent utilisés lorsque les décisions locales garantissent une solution optimale globale. Lorsqu’ils échouent, il est souvent nécessaire d’avoir recours à des approches comme la **programmation dynamique** ou la **recherche exhaustive**.
+
+## 4.4. Retour sur trace (Backtracking)
+
+### 1. Introduction au Backtracking
+Le **retour sur trace** (ou *backtracking*) est une technique algorithmique qui explore toutes les solutions possibles à un problème en construisant une solution incrémentalement. Lorsqu'une branche explorée mène à une impasse, l'algorithme revient en arrière ("backtrack") pour explorer une autre possibilité.
+
+### 2. Principe du Backtracking
+Le backtracking suit un schéma récursif où l'on :
+1. Construit une solution partielle.
+2. Vérifie si elle satisfait les contraintes du problème.
+3. Si oui, on poursuit avec l'étape suivante.
+4. Si non, on revient en arrière pour essayer une autre possibilité.
+
+Le **backtracking** est particulièrement efficace pour les problèmes combinatoires, où l'on cherche à générer toutes les solutions possibles et à en valider certaines.
+
+### 3. Exemples d'Applications
+Le **backtracking** est utilisé dans plusieurs domaines, notamment :
+- **Le problème des huit reines** (placer 8 reines sur un échiquier sans qu'elles ne s'attaquent)
+- **Le Sudoku** (remplir une grille en respectant les contraintes)
+- **Le problème du sac à dos** (optimisation combinatoire)
+- **Les labyrinthes** (trouver un chemin dans un graphe)
+
+### 4. Implémentation en Python
+Voici un exemple simple du backtracking appliqué au **problème des N reines** :
+
+```python
+def est_safe(echiquier, ligne, col, n):
+    for i in range(col):
+        if echiquier[ligne][i] == 1:
+            return False
+    for i, j in zip(range(ligne, -1, -1), range(col, -1, -1)):
+        if echiquier[i][j] == 1:
+            return False
+    for i, j in zip(range(ligne, n, 1), range(col, -1, -1)):
+        if echiquier[i][j] == 1:
+            return False
+    return True
+
+def resoudre_n_reines(echiquier, col, n):
+    if col >= n:
+        return True
+    for i in range(n):
+        if est_safe(echiquier, i, col, n):
+            echiquier[i][col] = 1
+            if resoudre_n_reines(echiquier, col + 1, n):
+                return True
+            echiquier[i][col] = 0  # Backtrack
+    return False
+
+def n_reines(n):
+    echiquier = [[0] * n for _ in range(n)]
+    if not resoudre_n_reines(echiquier, 0, n):
+        print("Solution inexistante")
+    else:
+        for ligne in echiquier:
+            print(" ".join(str(x) for x in ligne))
+
+n_reines(8)
+```
+
+### 5. Complexité du Backtracking
+La complexité du backtracking dépend du problème traité. Dans le pire des cas, il peut explorer toutes les solutions possibles, ce qui donne une complexité exponentielle **O(k^n)** pour un problème combinatoire à **n** étapes et **k** choix possibles à chaque étape.
+
+Cependant, des optimisations comme **la branche et l’élagage (branch and bound)** ou l’**ordre de recherche heuristique** peuvent améliorer l'efficacité.
+
+### 6. Conclusion
+Le **backtracking** est une méthode puissante pour résoudre des problèmes combinatoires et de recherche. Bien que souvent coûteux en termes de temps d'exécution, il reste une approche essentielle lorsqu'une solution exacte est requise et que l'exploration exhaustive est envisageable.
+
+## 4.5. Recherche locale et heuristiques
+
+### 4.5.1. Introduction
+La **recherche locale** et les **heuristiques** sont des approches permettant de trouver des solutions approximatives à des problèmes d’optimisation difficiles, souvent NP-durs. Contrairement aux méthodes exactes, ces approches ne garantissent pas nécessairement une solution optimale mais fournissent une solution satisfaisante en un temps raisonnable.
+
+---
+
+### 4.5.2. Recherche locale
+La recherche locale explore l’espace des solutions en passant d’une solution à une autre par de petites modifications appelées **mouvements**. Elle est efficace pour les problèmes combinatoires comme le **voyageur de commerce** (TSP) ou le **problème de satisfaction de contraintes**.
+
+#### Principes :
+- Définition d’un **espace de solutions**.
+- Utilisation d’une **fonction de coût** pour évaluer la qualité des solutions.
+- Application d’un **mouvement local** pour passer d’une solution à une autre.
+
+#### Exemples d’algorithmes de recherche locale :
+1. **Descente de gradient (Hill Climbing)**  
+   - À chaque étape, on passe à la meilleure solution voisine.
+   - Risque de rester bloqué dans un **optimum local**.
+
+2. **Recuit simulé (Simulated Annealing)**  
+   - Inspiré du processus physique de refroidissement des métaux.
+   - Introduit une probabilité d’accepter des solutions moins bonnes pour éviter les optima locaux.
+
+3. **Recherche tabou (Tabu Search)**  
+   - Maintient une liste des solutions récentes pour éviter de revenir en arrière.
+   - Permet d’explorer plus efficacement l’espace des solutions.
+
+---
+
+### 4.5.3. Heuristiques
+Les **heuristiques** sont des stratégies permettant de produire rapidement une solution satisfaisante en sacrifiant parfois l’optimalité. Elles sont souvent spécifiques à un problème donné.
+
+#### Types d’heuristiques :
+1. **Algorithmes gloutons (Greedy Algorithms)**  
+   - Sélectionnent localement la meilleure option sans considération du futur.
+   - Exemples : l’algorithme de Prim pour les arbres couvrants, Dijkstra pour les plus courts chemins.
+
+2. **Méthodes basées sur des règles (Rule-based Methods)**  
+   - Utilisation de règles heuristiques spécifiques au problème.
+   - Exemple : heuristique du plus proche voisin pour le problème du voyageur de commerce.
+
+3. **Algorithmes évolutionnaires et métaheuristiques**  
+   - Inspirés des processus biologiques ou physiques.
+   - Exemples : algorithmes génétiques, colonies de fourmis, optimisation par essaim de particules.
+
+---
+
+### 4.5.4. Comparaison et Applications
+| Méthode                | Avantages                            | Inconvénients                      | Exemples d’application |
+|------------------------|------------------------------------|------------------------------------|------------------------|
+| Descente de gradient   | Simple, efficace pour certains problèmes | Bloqué dans les optima locaux | Problèmes de clustering, optimisation continue |
+| Recuit simulé         | Évite les optima locaux, adaptable | Paramétrage délicat | Problèmes combinatoires |
+| Recherche tabou       | Exploration plus large de l’espace | Coût mémoire plus élevé | Planification, ordonnancement |
+| Algorithmes gloutons  | Rapide, implémentation simple | Ne donne pas toujours la solution optimale | Graphes, optimisation de réseau |
+| Algorithmes évolutionnaires | Bonne exploration globale | Temps de calcul élevé | Machine learning, optimisation multi-objectifs |
+
+---
+
+### 4.5.5. Conclusion
+Les algorithmes de **recherche locale** et les **heuristiques** sont essentiels pour résoudre efficacement des problèmes complexes. Bien que ces approches ne garantissent pas toujours l’optimalité, elles sont largement utilisées en intelligence artificielle, en recherche opérationnelle et en optimisation.
+
+---
+# 5. Structures de Données et Algorithmes Fondamentaux
+
+## 5.1. Listes, Piles et Files
+
+Les structures de données jouent un rôle crucial dans la conception des algorithmes. Parmi les plus fondamentales, on retrouve les **listes**, **piles** et **files**.
+
+### 5.1.1. Listes
+Une **liste** est une structure de données linéaire permettant de stocker une collection d’éléments. On distingue principalement :
+- **Liste chaînée** : chaque élément (nœud) contient une valeur et un pointeur vers l’élément suivant.
+- **Liste doublement chaînée** : chaque élément contient un pointeur vers l’élément précédent et suivant.
+- **Liste circulaire** : le dernier élément pointe vers le premier.
+
+📌 *Avantages* :
+- Insertion et suppression rapides (O(1) pour une liste chaînée).
+- Pas de taille fixe, contrairement aux tableaux.
+
+📌 *Inconvénients* :
+- Accès plus lent aux éléments (O(n) en moyenne).
+- Surcharge mémoire due aux pointeurs.
+
+### 5.1.2. Piles (*Stack*)
+Une **pile** est une structure de données respectant le principe **LIFO** (*Last In, First Out*), où le dernier élément ajouté est le premier retiré.
+
+**Opérations principales** :
+- `push(x)`: ajoute un élément `x` au sommet.
+- `pop()`: retire l’élément au sommet.
+- `peek()`: consulte l’élément au sommet sans le retirer.
+
+📌 *Applications* :
+- Gestion des appels de fonctions (pile d’exécution).
+- Annulation d’actions (Ctrl + Z).
+- Évaluation d’expressions (notation postfixe).
+
+### 5.1.3. Files (*Queue*)
+Une **file** suit le principe **FIFO** (*First In, First Out*), où le premier élément ajouté est le premier retiré.
+
+**Types de files** :
+- **File simple** : ajout à l’arrière (*enqueue*), retrait à l’avant (*dequeue*).
+- **File double (*Deque*)** : insertion et suppression possibles aux deux extrémités.
+- **File de priorité** : les éléments sont extraits selon une priorité et non leur ordre d’arrivée.
+
+📌 *Applications* :
+- Gestion des tâches dans les systèmes d’exploitation.
+- Algorithmes de parcours en largeur (*BFS*).
+- Impression de documents en file d’attente.
+
+---
+
+Dans les sections suivantes, nous explorerons d’autres structures de données avancées comme les **arbres** et les **graphes**, ainsi que leurs algorithmes associés.

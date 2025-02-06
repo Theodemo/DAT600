@@ -289,7 +289,7 @@ if __name__ == "__main__":
     #ob.printArray()
     #ob.quickSort()
     #ob.printArray()
-    sizes = [10, 20, 50]
+    sizes = [10, 20,30,40, 50,60,70,80]
     ob.plotComplexity(ob.heapSort, sizes)
     ob.plotComplexity(ob.insertionSort, sizes)
     ob.plotComplexity(ob.mergeSort, sizes)
