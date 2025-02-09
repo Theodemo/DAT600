@@ -240,32 +240,42 @@ class SortedMethods:
     def printArray(self):
         print("Tableau trié:", " ".join(map(str, self.arr)))
 
-    def plotComplexity(self, sort_method, sizes):
+    def plotComplexity(self, sort_method, sizes, theoretical_complexity,save_path=None):
         '''
-        Tracer la complexité du temps d'exécution
-        
+        Tracer la complexité expérimentale et théorique du temps d'exécution
+
         param sort_method: fonction, méthode de tri
         param sizes: list, tailles de tableau à tester
+        param theoretical_complexity: fonction, complexité théorique en fonction de n
 
         return: None
         '''
         previous_visualization = self.visualization
         self.visualization = False  # Désactiver la visualisation pour ne pas ralentir la complexité
         step_counts = []
+
         for size in sizes:
             self.arr = np.random.randint(1, 100, size)
             self.steps = 0
             sort_method()
             step_counts.append(self.steps)
-        
+
         self.visualization = previous_visualization  # Restaurer la visualisation
 
+        # Calculer la complexité théorique
+        theoretical_steps = [theoretical_complexity(n) for n in sizes]
+
         plt.figure()
-        plt.plot(sizes, step_counts, marker='o', linestyle='-', color='r')
+        plt.plot(sizes, step_counts, marker='o', linestyle='-', color='r', label="Complexité mesurée")
+        plt.plot(sizes, theoretical_steps, marker='x', linestyle='--', color='b', label="Complexité théorique")
         plt.xlabel("Taille d'entrée (n)")
         plt.ylabel("Nombre d'étapes")
         plt.title(f"Complexité du {sort_method.__name__}")
+        plt.legend()
         plt.grid()
+        if save_path:
+            plt.savefig(save_path)
+
         plt.show()
 
     def _update_plot(self, ax):
@@ -279,6 +289,20 @@ class SortedMethods:
         ax.set_title(f"Étape {self.steps}")
         plt.pause(1 * 10**-3)
 
+
+# Exemples de fonctions pour la complexité théorique
+def complexity_insertion_sort(n):
+    return n**2  # Θ(n^2)
+
+def complexity_merge_sort(n):
+    return n * np.log2(n)  # Θ(n log n)
+
+def complexity_heap_sort(n):
+    return n * np.log2(n)  # O(n log n)
+
+def complexity_quick_sort(n):
+    return n**2  # Θ(n^2) dans le pire cas
+
 if __name__ == "__main__":
     ob = SortedMethods(100, visualization=True)
     #ob.insertionSort()
@@ -290,7 +314,7 @@ if __name__ == "__main__":
     #ob.quickSort()
     #ob.printArray()
     sizes = [10, 20,30,40, 50,60,70,80]
-    ob.plotComplexity(ob.heapSort, sizes)
-    ob.plotComplexity(ob.insertionSort, sizes)
-    ob.plotComplexity(ob.mergeSort, sizes)
-    ob.plotComplexity(ob.quickSort, sizes)
+    ob.plotComplexity(ob.heapSort, sizes,complexity_heap_sort,"complexity_heap_sort")
+    ob.plotComplexity(ob.insertionSort, sizes,complexity_insertion_sort,"complexity_insertion_sort")
+    ob.plotComplexity(ob.mergeSort, sizes,complexity_merge_sort,"complexity_merge_sort")
+    ob.plotComplexity(ob.quickSort, sizes,complexity_quick_sort,"complexity_quick_sort")
