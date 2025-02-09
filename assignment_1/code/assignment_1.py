@@ -255,7 +255,7 @@ class SortedMethods:
         step_counts = []
 
         for size in sizes:
-            self.arr = np.random.randint(1, 100, size)
+            self.arr = list(range(1, size + 1)) #np.random.randint(1, 100, size)
             self.steps = 0
             sort_method()
             step_counts.append(self.steps)
@@ -314,7 +314,7 @@ if __name__ == "__main__":
     #ob.quickSort()
     #ob.printArray()
     sizes = [10, 20,30,40, 50,60,70,80]
-    ob.plotComplexity(ob.heapSort, sizes,complexity_heap_sort,"complexity_heap_sort")
-    ob.plotComplexity(ob.insertionSort, sizes,complexity_insertion_sort,"complexity_insertion_sort")
-    ob.plotComplexity(ob.mergeSort, sizes,complexity_merge_sort,"complexity_merge_sort")
-    ob.plotComplexity(ob.quickSort, sizes,complexity_quick_sort,"complexity_quick_sort")
+    #ob.plotComplexity(ob.heapSort, sizes,complexity_heap_sort,"complexity_heap_sort")
+    #ob.plotComplexity(ob.insertionSort, sizes,complexity_insertion_sort,"complexity_insertion_sort")
+    #ob.plotComplexity(ob.mergeSort, sizes,complexity_merge_sort,"complexity_merge_sort")
+    #ob.plotComplexity(ob.quickSort, sizes,complexity_quick_sort,"complexity_quick_sort")
