@@ -255,7 +255,7 @@ class SortedMethods:
         step_counts = []
 
         for size in sizes:
-            self.arr = list(range(1, size + 1)) #np.random.randint(1, 100, size)
+            self.arr =np.random.randint(1, 100, size)
             self.steps = 0
             sort_method()
             step_counts.append(self.steps)
@@ -266,6 +266,8 @@ class SortedMethods:
         theoretical_steps = [theoretical_complexity(n) for n in sizes]
 
         plt.figure()
+        plt.xscale('log')
+        plt.yscale('log')
         plt.plot(sizes, step_counts, marker='o', linestyle='-', color='r', label="Complexité mesurée")
         plt.plot(sizes, theoretical_steps, marker='x', linestyle='--', color='b', label="Complexité théorique")
         plt.xlabel("Taille d'entrée (n)")
@@ -290,7 +292,6 @@ class SortedMethods:
         plt.pause(1 * 10**-3)
 
 
-# Exemples de fonctions pour la complexité théorique
 def complexity_insertion_sort(n):
     return n**2  # Θ(n^2)
 
@@ -301,20 +302,29 @@ def complexity_heap_sort(n):
     return n * np.log2(n)  # O(n log n)
 
 def complexity_quick_sort(n):
-    return n**2  # Θ(n^2) dans le pire cas
+    return n**2  # Θ(n^2) 
 
 if __name__ == "__main__":
     ob = SortedMethods(100, visualization=True)
     #ob.insertionSort()
-    #ob.printArray()
     #ob.mergeSort()
-    #ob.printArray()
     #ob.heapSort()
-    #ob.printArray()
     #ob.quickSort()
-    #ob.printArray()
-    sizes = [10, 20,30,40, 50,60,70,80]
-    #ob.plotComplexity(ob.heapSort, sizes,complexity_heap_sort,"complexity_heap_sort")
-    #ob.plotComplexity(ob.insertionSort, sizes,complexity_insertion_sort,"complexity_insertion_sort")
-    #ob.plotComplexity(ob.mergeSort, sizes,complexity_merge_sort,"complexity_merge_sort")
-    #ob.plotComplexity(ob.quickSort, sizes,complexity_quick_sort,"complexity_quick_sort")
+
+    sizes =[10, 20,30,40, 50,60,70,80,90,100]
+    ob.plotComplexity(ob.heapSort, sizes,complexity_heap_sort,r"assignment_1\images\complexity_heap_sort.png")
+    ob.plotComplexity(ob.insertionSort, sizes,complexity_insertion_sort,r"assignment_1\images\complexity_insertion_sort.png")
+    ob.plotComplexity(ob.mergeSort, sizes,complexity_merge_sort,r"assignment_1\images\complexity_merge_sort.png")
+    ob.plotComplexity(ob.quickSort, sizes,complexity_quick_sort,r"assignment_1\images\complexity_quick_sort.png")
+
+'''
+    if 'insertion' in algorithm.lower():
+        return list(range(size, 0, -1))  # Ordre décroissant
+    elif 'merge' in algorithm.lower():
+        return list(range(size, 0, -1))  # Merge Sort est toujours O(n log n), mais un ordre inversé ne l'aide pas
+    elif 'heap' in algorithm.lower():
+        return list(range(1, size + 1))  # Ordre croissant, car nécessite le maximum de réorganisations
+    elif 'quick' in algorithm.lower():
+        return list(range(size))  # Déjà trié, provoque O(n²) si le pivot est mal choisi
+
+'''
