@@ -1305,3 +1305,250 @@ En compilation, la coloration de graphes est utilisée pour optimiser l'allocati
 ### 6.4.5. Conclusion
 Le problème de coloration de graphes est un domaine riche en théories et applications pratiques. Sa résolution efficace est un enjeu majeur en informatique et en optimisation combinatoire. Bien que plusieurs algorithmes existent, l’optimisation de la coloration reste un défi pour les grands graphes et les problèmes complexes.
 
+# 7. Algorithmes Probabilistes et Approximatifs
+
+Les algorithmes probabilistes utilisent des nombres aléatoires dans leur processus de décision pour améliorer leurs performances ou contourner certaines limitations des algorithmes déterministes. Ils sont particulièrement utiles lorsque les solutions exactes sont difficiles ou coûteuses à obtenir.
+
+## 7.1. Algorithmes de Monte-Carlo et Las Vegas
+
+Les algorithmes probabilistes peuvent être classés en deux grandes catégories : **Monte-Carlo** et **Las Vegas**.
+
+### 7.1.1. Algorithmes de Monte-Carlo
+
+Les algorithmes de **Monte-Carlo** produisent des résultats approximatifs en utilisant des nombres aléatoires. Leur particularité est que leur temps d'exécution est déterministe, mais ils peuvent donner des réponses incorrectes avec une certaine probabilité.
+
+**Propriétés des algorithmes Monte-Carlo :**
+- Temps d'exécution borné.
+- Résultats approximatifs avec une probabilité d'erreur.
+- Précision améliorée en augmentant le nombre d'échantillons.
+
+**Exemples :**
+- **Test de primalité de Miller-Rabin** : Détermine si un nombre est premier avec une certaine probabilité d'erreur.
+- **Méthode de Monte-Carlo pour l’intégration** : Approxime des intégrales complexes en échantillonnant des points aléatoires.
+- **Simulation de systèmes physiques** : Utilisée en physique statistique et finance quantitative.
+
+### 7.1.2. Algorithmes de Las Vegas
+
+Les algorithmes de **Las Vegas**, contrairement aux Monte-Carlo, garantissent des résultats corrects, mais leur temps d'exécution peut varier en fonction des événements aléatoires.
+
+**Propriétés des algorithmes Las Vegas :**
+- Résultats toujours corrects.
+- Temps d'exécution aléatoire, mais borné en espérance.
+
+**Exemples :**
+- **Tri rapide randomisé (Randomized Quicksort)** : Utilise une sélection aléatoire du pivot pour améliorer la performance moyenne.
+- **Algorithme de vérification de satisfiabilité (Randomized SAT solvers)** : Explore des configurations aléatoires jusqu'à trouver une solution.
+- **Algorithme de Karger pour la coupe minimale** : Répète aléatoirement une contraction de graphe pour identifier une coupe minimale avec haute probabilité.
+
+---
+
+Les algorithmes probabilistes jouent un rôle clé dans de nombreux domaines, allant de la cryptographie à l’intelligence artificielle, en passant par l'optimisation et la simulation. Le choix entre Monte-Carlo et Las Vegas dépend du contexte : Monte-Carlo privilégie une exécution rapide avec un risque d'erreur, tandis que Las Vegas garantit l'exactitude mais avec un temps d'exécution potentiellement variable.
+## 7.2. Schémas d’approximation (PTAS, FPTAS)
+
+### Introduction
+Un **schéma d'approximation** est une approche algorithmique permettant de trouver une solution approximative à un problème d'optimisation difficile. Ces schémas sont utilisés lorsque le calcul d'une solution exacte est trop complexe (typiquement pour les problèmes NP-difficiles). L'objectif est d'obtenir une solution proche de l'optimum en un temps raisonnable.
+
+Deux types principaux de schémas d'approximation existent :
+- **PTAS (Polynomial-Time Approximation Scheme)**
+- **FPTAS (Fully Polynomial-Time Approximation Scheme)**
+
+### 1. PTAS (Polynomial-Time Approximation Scheme)
+Un **PTAS** est un algorithme qui, pour tout facteur d'approximation ε > 0 donné, retourne une solution dont la qualité est à un facteur (1+ε) du résultat optimal, en un temps polynomial en la taille de l'entrée.
+
+#### Caractéristiques d'un PTAS
+- L'utilisateur peut choisir un paramètre **ε** pour ajuster la qualité de l'approximation.
+- Le temps d'exécution est polynomial pour toute valeur fixée de ε, mais peut devenir exponentiel lorsque ε tend vers 0.
+
+#### Exemples de problèmes admettant un PTAS
+- **Problème du sac à dos (Knapsack Problem)**
+- **Problème du voyageur de commerce (TSP) en métrique euclidienne**
+
+### 2. FPTAS (Fully Polynomial-Time Approximation Scheme)
+Un **FPTAS** est un schéma d'approximation plus puissant qu'un PTAS. Il garantit un temps d'exécution polynomial à la fois en la taille de l'entrée **et** en 1/ε.
+
+#### Caractéristiques d'un FPTAS
+- La complexité est **polynomiale** en la taille de l'entrée et en 1/ε.
+- Il offre une meilleure efficacité en termes de temps d'exécution par rapport à un PTAS.
+- Les problèmes admettant un FPTAS sont souvent plus accessibles que ceux n'admettant qu'un PTAS.
+
+#### Exemples de problèmes admettant un FPTAS
+- **Problème du sac à dos** (Knapsack Problem)
+- **Problèmes de flot dans les réseaux**
+
+### Comparaison PTAS vs FPTAS
+| Critère       | PTAS | FPTAS |
+|--------------|------|-------|
+| Approximation | (1+ε)-approximatif | (1+ε)-approximatif |
+| Temps d'exécution | Polynomial en n, mais potentiellement exponentiel en 1/ε | Polynomial en n et en 1/ε |
+| Performance | Plus lent pour de petits ε | Plus rapide pour de petits ε |
+
+### Conclusion
+Les schémas d'approximation PTAS et FPTAS sont des outils essentiels pour résoudre efficacement des problèmes d'optimisation difficiles. Si un problème admet un FPTAS, il est souvent préféré à un PTAS en raison de son efficacité accrue. Toutefois, pour certains problèmes combinatoires, un FPTAS n'existe pas, et un PTAS reste la meilleure alternative possible.
+
+## 7.3. Algorithmes génétiques et métaheuristiques
+
+### 7.3.1. Introduction aux Métaheuristiques
+Les métaheuristiques sont des techniques d'optimisation qui permettent de résoudre des problèmes complexes pour lesquels les approches exactes sont trop coûteuses en temps de calcul. Elles sont souvent utilisées pour des problèmes NP-difficiles.
+
+#### Caractéristiques des métaheuristiques :
+- Approches heuristiques guidées par des stratégies d'optimisation.
+- Capacité à explorer efficacement de vastes espaces de solutions.
+- Adaptabilité à divers types de problèmes.
+- Recherche d'une solution proche de l'optimal dans un temps raisonnable.
+
+### 7.3.2. Algorithmes Génétiques (AG)
+Les algorithmes génétiques sont une classe spécifique de métaheuristiques inspirée de l'évolution biologique.
+
+#### Principe des AG :
+Un algorithme génétique repose sur la sélection naturelle et la génétique pour améliorer progressivement un ensemble de solutions candidates.
+
+#### Étapes principales :
+1. **Initialisation** : Génération aléatoire d'une population initiale de solutions.
+2. **Évaluation** : Attribution d'une valeur de fitness à chaque individu.
+3. **Sélection** : Choix des individus les plus performants pour la reproduction.
+4. **Croisement (Crossover)** : Combinaison de deux individus pour produire une nouvelle solution.
+5. **Mutation** : Modification aléatoire d'un individu pour maintenir la diversité génétique.
+6. **Nouvelle génération** : Remplacement des anciens individus par de nouveaux.
+7. **Arrêt** : L'algorithme s'arrête lorsqu'un critère de convergence est atteint (ex : nombre maximal d'itérations, amélioration minimale).
+
+#### Exemples d'Applications des AG :
+- Optimisation de trajets (ex : problème du voyageur de commerce).
+- Planification et allocation de ressources.
+- Apprentissage automatique et intelligence artificielle.
+
+### 7.3.3. Autres Métaheuristiques Importantes
+
+#### **Recuit Simulé (Simulated Annealing - SA)**
+- Inspiré du processus de refroidissement des métaux.
+- Exploration progressive de l’espace des solutions avec une probabilité décroissante d’accepter des solutions moins bonnes.
+
+#### **Optimisation par Essaims de Particules (Particle Swarm Optimization - PSO)**
+- Inspiré des comportements collectifs des essaims d’animaux (oiseaux, poissons).
+- Les solutions évoluent selon des règles de coopération et d'exploration.
+
+#### **Recherche Tabou**
+- Utilise une mémoire pour éviter de revisiter les mêmes solutions.
+- Permet d’explorer des solutions temporairement moins bonnes pour éviter les minima locaux.
+
+#### **Colonies de Fourmis (Ant Colony Optimization - ACO)**
+- Basé sur le comportement des fourmis en quête de nourriture.
+- Utilisé principalement pour les problèmes de graphes (ex : plus court chemin).
+
+### 7.3.4. Comparaison et Choix d’une Métaheuristique
+Le choix d’une métaheuristique dépend du type de problème, du temps de calcul disponible et des exigences de qualité de la solution. Une combinaison de plusieurs approches (hybridation) est souvent utilisée pour améliorer les performances.
+
+| Métaheuristique | Inspiration | Adaptabilité | Meilleures Applications |
+|---|---|---|---|
+| Algorithmes génétiques (GA) | Évolution biologique | Élevée | Optimisation combinatoire, IA |
+| Recuit Simulé (SA) | Thermodynamique | Moyenne | Problèmes de minimisation |
+| PSO | Essaims d’animaux | Moyenne | Réseaux neuronaux, optimisation continue |
+| Recherche Tabou | Mémoire adaptative | Élevée | Planification, logistique |
+| ACO | Colonies de fourmis | Moyenne | Problèmes de graphes |
+
+### 7.3.5. Conclusion
+Les métaheuristiques, et en particulier les algorithmes génétiques, offrent une approche puissante pour résoudre des problèmes complexes où les méthodes exactes sont impraticables. Elles permettent d'explorer efficacement de grands espaces de recherche et de fournir des solutions proches de l'optimal dans un temps raisonnable.
+# 8. Algorithmes Distribués et Parallèles
+
+## 8.1. Modèles de calcul parallèle
+
+Le calcul parallèle consiste à exécuter plusieurs opérations simultanément afin d'accélérer le traitement des données. Il repose sur plusieurs modèles et architectures qui définissent la manière dont les unités de calcul interagissent.
+
+### 8.1.1. Modèle PRAM (Parallel Random Access Machine)
+
+Le modèle **PRAM** est une généralisation du modèle RAM permettant l'exécution simultanée de plusieurs instructions. Il se caractérise par :
+- Un ensemble de **processeurs** exécutant des instructions en parallèle.
+- Une **mémoire partagée** accessible par tous les processeurs.
+- Une **unité de contrôle** qui synchronise l'exécution des instructions.
+
+Les variantes de PRAM diffèrent par la gestion des accès concurrents à la mémoire :
+- **EREW (Exclusive Read, Exclusive Write)** : aucun accès concurrent en lecture ou en écriture.
+- **CREW (Concurrent Read, Exclusive Write)** : lecture concurrente autorisée, écriture exclusive.
+- **CRCW (Concurrent Read, Concurrent Write)** : lecture et écriture concurrentes autorisées.
+
+### 8.1.2. Modèle BSP (Bulk Synchronous Parallel)
+
+Le modèle **BSP** divise le calcul en plusieurs **super-étapes**, composées de :
+1. **Calcul local** : chaque processeur exécute ses opérations indépendamment.
+2. **Communication** : échange de données entre les processeurs.
+3. **Synchronisation** : une barrière de synchronisation assure que toutes les unités avancent ensemble.
+
+Ce modèle est efficace pour la parallélisation d'algorithmes nécessitant une communication limitée entre les unités de calcul.
+
+### 8.1.3. Modèle MapReduce
+
+Le modèle **MapReduce** est utilisé principalement pour le traitement distribué de grandes quantités de données. Il repose sur deux opérations fondamentales :
+- **Map** : transformation des données d'entrée en paires clé-valeur.
+- **Reduce** : agrégation des résultats selon les clés générées par la phase Map.
+
+Ce modèle est utilisé dans des systèmes massivement distribués comme **Hadoop** et **Spark**.
+
+### 8.1.4. Architectures Matérielles pour le Calcul Parallèle
+
+Le calcul parallèle repose sur différentes architectures matérielles :
+- **SIMD (Single Instruction, Multiple Data)** : une même instruction est appliquée simultanément à plusieurs données (ex. : GPU).
+- **MIMD (Multiple Instructions, Multiple Data)** : différents processeurs exécutent des instructions indépendantes sur différentes données (ex. : clusters de serveurs).
+- **CUDA/OpenCL** : paradigmes de programmation pour l'exploitation des GPU en parallèle.
+
+### 8.1.5. Défis du Calcul Parallèle
+
+- **Problèmes de synchronisation** : gestion efficace des accès concurrents aux ressources.
+- **Communication et latence** : optimisation des échanges de données entre les unités de calcul.
+- **Charge de travail déséquilibrée** : répartition efficace des tâches entre les processeurs.
+- **Overhead de parallélisation** : coût supplémentaire lié à la gestion du parallélisme.
+
+---
+
+Ce chapitre fournit une base solide pour comprendre les principes du calcul parallèle et ses applications dans divers domaines (simulation, IA, big data, etc.).
+## 8.2. Algorithmes répartis et consensus
+
+### Introduction
+Les **algorithmes répartis** sont des algorithmes conçus pour fonctionner sur des systèmes distribués où plusieurs processus s’exécutent simultanément sur des machines interconnectées. L'un des problèmes fondamentaux de l'informatique distribuée est le **problème du consensus**, qui consiste à faire en sorte que tous les processus d’un système distribué s’accordent sur une valeur unique, même en présence de pannes ou de processus malveillants.
+
+### 1. Modèles et Environnements de Calcul Réparti
+
+Les algorithmes répartis fonctionnent sous divers modèles de communication et d'exécution, notamment :
+
+- **Modèle synchrone** : le temps est divisé en rounds, et toutes les actions des processus sont synchronisées.
+- **Modèle asynchrone** : il n’y a pas de garantie sur le temps d'exécution des processus ou la livraison des messages.
+- **Modèle partiellement synchrone** : un compromis entre les deux précédents, où certaines garanties de synchronisation existent, mais de manière limitée.
+
+Les communications peuvent se faire par :
+- **Passage de messages** : les processus s’envoient des messages pour échanger des informations.
+- **Mémoire partagée** : les processus accèdent à une mémoire commune pour lire et écrire des valeurs.
+
+### 2. Le Problème du Consensus
+
+Le **consensus** est un mécanisme permettant aux processus d'un système réparti de se mettre d'accord sur une décision unique. Ce problème est central dans les environnements distribués, notamment pour les bases de données distribuées et les systèmes tolérants aux pannes.
+
+#### 2.1 Conditions du consensus
+Un algorithme de consensus doit satisfaire trois propriétés fondamentales :
+
+- **Validité** : si tous les processus proposent la même valeur, la valeur décidée doit être cette valeur.
+- **Accord (Agreement)** : tous les processus qui décident doivent choisir la même valeur.
+- **Terminaison** : tous les processus corrects doivent finir par prendre une décision.
+
+#### 2.2 L'impossibilité du consensus en modèle asynchrone (Théorème de FLP)
+Fischer, Lynch et Paterson ont démontré en 1985 que **dans un système asynchrone avec au moins un processus sujet à des pannes, il est impossible de garantir à la fois la validité, l’accord et la terminaison**. Ce résultat, connu sous le nom de **théorème de FLP**, implique qu’aucun algorithme déterministe ne peut garantir le consensus dans un système asynchrone pur.
+
+### 3. Algorithmes de Consensus
+
+Face aux limitations du théorème de FLP, plusieurs algorithmes de consensus ont été développés, souvent en ajoutant des hypothèses sur la synchronisation ou en tolérant des défaillances spécifiques.
+
+#### 3.1 Algorithmes Basés sur les Élections
+Dans certains systèmes, un processus est désigné comme **leader**, chargé de coordonner la prise de décision. Exemples :
+- **Élection de Bully** : un processus ayant l'identifiant le plus élevé est élu comme leader.
+- **Élection de l'anneau** : les processus forment un anneau logique et s'élisent mutuellement jusqu'à atteindre un consensus.
+
+#### 3.2 Algorithmes Basés sur le Journal Répliqué
+Les systèmes de consensus distribués modernes utilisent souvent un **journal répliqué** pour garantir la cohérence des décisions prises.
+- **Paxos** (proposé par Leslie Lamport) : un protocole de consensus tolérant aux pannes.
+- **Raft** : une alternative à Paxos, plus simple à implémenter, largement utilisée pour la gestion des clusters.
+
+#### 3.3 Algorithmes de Consensus Tolérants aux Fautes Byzantines
+Lorsque des processus malveillants (attaquants, corruptions de données) sont présents, il est nécessaire d’utiliser des algorithmes capables de tolérer des fautes byzantines.
+- **PBFT (Practical Byzantine Fault Tolerance)** : un algorithme efficace pour les environnements tolérants aux pannes byzantines.
+- **Algorithmes de consensus dans les blockchains (Proof of Work, Proof of Stake, etc.)** : utilisés pour garantir l’intégrité et la sécurité des transactions.
+
+### Conclusion
+Les algorithmes répartis et les protocoles de consensus jouent un rôle clé dans la conception de systèmes tolérants aux pannes, des bases de données distribuées aux blockchains. Bien que le théorème de FLP établisse des limites à ce qui est possible dans un système asynchrone, des solutions pratiques comme Paxos, Raft et PBFT permettent d’obtenir un consensus robuste en assumant certaines conditions supplémentaires.
+
