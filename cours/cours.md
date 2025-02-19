@@ -931,3 +931,377 @@ Le tri Shell est une amélioration du tri par insertion. Il permet de trier les 
 ### Conclusion
 Les algorithmes de tri sont des outils fondamentaux en informatique, et le choix de l'algorithme dépend du contexte (taille du tableau, structure des données, etc.). Les algorithmes comme le tri fusion et le tri rapide sont largement utilisés en raison de leur efficacité, tandis que des algorithmes comme le tri par insertion et le tri par sélection peuvent être utiles pour de petites tailles de données ou des cas particuliers.
 
+## 5.4. Algorithmes de recherche
+
+Les algorithmes de recherche sont utilisés pour retrouver un élément spécifique dans une structure de données, telle qu'un tableau ou une liste. Selon la nature des données et les exigences en termes de performance, différents algorithmes peuvent être utilisés.
+
+### 5.4.1. Recherche linéaire
+
+La **recherche linéaire** consiste à parcourir un tableau élément par élément jusqu'à trouver la valeur recherchée ou atteindre la fin du tableau.
+
+**Pseudo-code :**
+
+```plaintext
+fonction rechercheLinéaire(tableau, cible):
+    pour i de 0 à longueur(tableau) - 1:
+        si tableau[i] == cible:
+            retourner i
+    retourner -1  // Élément non trouvé
+```
+
+**Complexité :** O(n) dans le pire et le cas moyen, O(1) dans le meilleur cas.
+
+### 5.4.2. Recherche dichotomique (binaire)
+
+La **recherche dichotomique** est un algorithme plus efficace utilisé lorsque les données sont triées. Il consiste à diviser le tableau en deux moitiés à chaque itération et à rechercher dans la moitié appropriée.
+
+**Pseudo-code :**
+
+```plaintext
+fonction rechercheDichotomique(tableau, cible):
+    gauche ← 0
+    droite ← longueur(tableau) - 1
+    
+    tant que gauche ≤ droite:
+        milieu ← (gauche + droite) // 2
+        
+        si tableau[milieu] == cible:
+            retourner milieu
+        sinon si tableau[milieu] < cible:
+            gauche ← milieu + 1
+        sinon:
+            droite ← milieu - 1
+    
+    retourner -1  // Élément non trouvé
+```
+
+**Complexité :** O(log n), ce qui est beaucoup plus efficace que la recherche linéaire pour de grandes données triées.
+
+### 5.4.3. Recherche par interpolation
+
+La **recherche par interpolation** est une optimisation de la recherche dichotomique qui utilise une estimation basée sur l'interpolation des valeurs.
+
+Elle est efficace lorsque les valeurs sont distribuées de manière uniforme.
+
+**Pseudo-code :**
+
+```plaintext
+fonction rechercheInterpolation(tableau, cible):
+    gauche ← 0
+    droite ← longueur(tableau) - 1
+    
+    tant que gauche ≤ droite et cible ≥ tableau[gauche] et cible ≤ tableau[droite]:
+        position ← gauche + ((cible - tableau[gauche]) * (droite - gauche) / (tableau[droite] - tableau[gauche]))
+        
+        si tableau[position] == cible:
+            retourner position
+        sinon si tableau[position] < cible:
+            gauche ← position + 1
+        sinon:
+            droite ← position - 1
+    
+    retourner -1  // Élément non trouvé
+```
+
+**Complexité :** O(log log n) dans le cas idéal, mais peut atteindre O(n) dans le pire cas si les données ne sont pas bien réparties.
+
+### 5.4.4. Comparaison des algorithmes de recherche
+
+| Algorithme               | Complexité (pire cas) | Conditions d'utilisation |
+|--------------------------|----------------------|--------------------------|
+| Recherche linéaire      | O(n)                 | Tableau non trié         |
+| Recherche dichotomique  | O(log n)             | Tableau trié             |
+| Recherche par interpolation | O(log log n) | Tableau trié et bien réparti |
+
+### Conclusion
+
+Le choix de l'algorithme de recherche dépend de la structure et du tri des données. Si le tableau est non trié, la recherche linéaire est la seule option. Si les données sont triées, la recherche dichotomique est un bon choix, et si elles sont uniformément réparties, la recherche par interpolation peut être encore plus efficace.
+# 6. Algorithmes sur les Graphes
+
+Les graphes sont des structures fondamentales en informatique et en mathématiques discrètes. Ils permettent de modéliser une multitude de problèmes comme les réseaux sociaux, les itinéraires routiers, les systèmes de recommandations, etc. Cette section traite des différentes représentations des graphes ainsi que des principaux algorithmes de parcours.
+
+## 6.1. Représentation et parcours (BFS, DFS)
+
+### 6.1.1. Représentation des graphes
+
+Un graphe \( G = (V, E) \) est composé d'un ensemble de sommets \( V \) et d'un ensemble d'arêtes \( E \). Un graphe peut être **orienté** (les arêtes ont une direction) ou **non orienté** (les arêtes sont bidirectionnelles).
+
+Les graphes peuvent être représentés de différentes manières :
+
+- **Liste d'adjacence** :
+  - Chaque sommet a une liste des sommets adjacents.
+  - Utilisée pour les graphes clairsemés.
+  - Complexité en espace : \( O(V + E) \).
+
+- **Matrice d'adjacence** :
+  - Une matrice \( A \) de taille \( |V| \times |V| \) où \( A[i][j] = 1 \) si une arête existe entre les sommets \( i \) et \( j \), sinon \( A[i][j] = 0 \).
+  - Utile pour les graphes denses.
+  - Complexité en espace : \( O(V^2) \).
+
+Exemple d'une liste d'adjacence pour un graphe orienté :
+
+```plaintext
+0 -> 1, 2
+1 -> 2
+2 -> 0, 3
+3 -> 3
+```
+
+### 6.1.2. Parcours en largeur (BFS - Breadth First Search)
+
+L'algorithme **BFS** explore un graphe niveau par niveau, en visitant tous les voisins d'un sommet avant de passer au niveau suivant. Il utilise une file (FIFO) pour stocker les sommets à explorer.
+
+**Pseudo-code de BFS :**
+
+```python
+BFS(G, s):
+    créer une file F
+    marquer s comme visité
+    enfiler s dans F
+    
+    tant que F n'est pas vide:
+        u = défiler(F)
+        pour chaque voisin v de u:
+            si v n'est pas visité:
+                marquer v comme visité
+                enfiler v dans F
+```
+
+**Complexité temporelle** : \( O(V + E) \)
+
+**Exemple d'application** :
+- Recherche du plus court chemin dans un graphe non pondéré.
+- Détection de connexité dans un graphe.
+
+### 6.1.3. Parcours en profondeur (DFS - Depth First Search)
+
+L'algorithme **DFS** explore un graphe en profondeur, en suivant une branche jusqu'à ce qu'il ne soit plus possible d'avancer, puis en revenant en arrière.
+
+DFS peut être implémenté récursivement ou avec une pile explicite.
+
+**Pseudo-code de DFS récursif :**
+
+```python
+DFS(G, u, visité):
+    marquer u comme visité
+    pour chaque voisin v de u:
+        si v n'est pas visité:
+            DFS(G, v, visité)
+```
+
+**Complexité temporelle** : \( O(V + E) \)
+
+**Applications de DFS** :
+- Détection de cycles dans un graphe.
+- Recherche de composants fortement connexes.
+- Résolution de labyrinthes.
+
+---
+
+Ces deux algorithmes sont fondamentaux pour l'exploration et l'analyse des graphes et servent de base à de nombreuses autres techniques avancées comme Dijkstra ou A*.
+## 6.2. Algorithmes de plus court chemin (Dijkstra, Bellman-Ford)
+
+Les algorithmes de plus court chemin sont essentiels en informatique pour résoudre des problèmes d’optimisation dans les graphes pondérés. Deux des algorithmes les plus connus sont **Dijkstra** et **Bellman-Ford**.
+
+### 6.2.1. Algorithme de Dijkstra
+
+L’algorithme de **Dijkstra** permet de trouver le plus court chemin depuis un sommet source vers tous les autres sommets d’un graphe pondéré à poids positifs.
+
+#### **Principe**
+1. Initialiser la distance du sommet source à 0 et celle des autres sommets à l'infini.
+2. Utiliser une file de priorité pour explorer les sommets en fonction de la plus petite distance connue.
+3. Pour chaque sommet exploré, mettre à jour les distances des voisins si un chemin plus court est trouvé.
+4. Répéter jusqu'à ce que tous les sommets aient été traités.
+
+#### **Complexité**
+- **O((V + E) log V)** avec une **file de priorité** implémentée en **tas binaire**.
+- **O(V²)** avec une **matrice d'adjacence**.
+
+#### **Exemple d'implémentation en Python**
+
+```python
+import heapq
+
+def dijkstra(graph, start):
+    distances = {node: float('inf') for node in graph}
+    distances[start] = 0
+    priority_queue = [(0, start)]
+    
+    while priority_queue:
+        current_distance, current_node = heapq.heappop(priority_queue)
+        
+        if current_distance > distances[current_node]:
+            continue
+        
+        for neighbor, weight in graph[current_node].items():
+            distance = current_distance + weight
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(priority_queue, (distance, neighbor))
+    
+    return distances
+```
+
+### 6.2.2. Algorithme de Bellman-Ford
+
+L’algorithme de **Bellman-Ford** est une alternative qui fonctionne aussi pour les graphes avec **poids négatifs**, contrairement à Dijkstra.
+
+#### **Principe**
+1. Initialiser la distance du sommet source à 0 et celle des autres sommets à l'infini.
+2. Répéter **|V| - 1 fois** : pour chaque arête `(u, v, w)`, mettre à jour `distance[v]` si `distance[u] + w < distance[v]`.
+3. Vérifier la présence de **cycles négatifs** en effectuant une itération supplémentaire.
+
+#### **Complexité**
+- **O(VE)**, ce qui est plus lent que Dijkstra sur les grands graphes.
+
+#### **Exemple d'implémentation en Python**
+
+```python
+def bellman_ford(graph, vertices, edges, start):
+    distances = {node: float('inf') for node in vertices}
+    distances[start] = 0
+    
+    for _ in range(len(vertices) - 1):
+        for u, v, w in edges:
+            if distances[u] + w < distances[v]:
+                distances[v] = distances[u] + w
+    
+    # Vérification des cycles négatifs
+    for u, v, w in edges:
+        if distances[u] + w < distances[v]:
+            raise ValueError("Le graphe contient un cycle de poids négatif")
+    
+    return distances
+```
+
+### 6.2.3. Comparaison entre Dijkstra et Bellman-Ford
+
+| Algorithme     | Poids négatifs | Complexité | Utilisation |
+|---------------|---------------|------------|-------------|
+| Dijkstra      | ❌ Non         | O((V + E) log V) | Graphes avec poids positifs |
+| Bellman-Ford  | ✅ Oui         | O(VE)      | Graphes avec poids négatifs |
+
+### 6.2.4. Applications
+- **Routage sur les réseaux** (ex : protocoles OSPF et RIP)
+- **Calcul d’itinéraires GPS**
+- **Optimisation dans les systèmes de transport**
+- **Analyse de graphes financiers et sociaux**
+## 6.3. Algorithmes de Flot et de Couplage
+
+### 1. Introduction
+Les **algorithmes de flot et de couplage** sont des outils fondamentaux en théorie des graphes avec de nombreuses applications en réseaux, planification et optimisation combinatoire. Ils permettent de résoudre des problèmes tels que l'optimisation du transport, l'affectation de ressources et la maximisation des correspondances dans un graphe biparti.
+
+---
+
+### 2. Problème de Flot Maximum
+
+#### 2.1 Définition
+Le **problème de flot maximum** consiste à maximiser le flux envoyé d'une source `s` vers un puits `t` dans un graphe orienté où chaque arête a une capacité maximale.
+
+#### 2.2 Algorithmes Classiques
+
+- **Algorithme de Ford-Fulkerson**  
+  - Basé sur la recherche de chemins augmentants.
+  - Complexité : O(E * max_flow) dans la version naïve.
+  - Implémentation efficace avec la recherche en largeur (BFS) donne l’algorithme d’Edmonds-Karp.
+
+- **Algorithme d’Edmonds-Karp**  
+  - Utilise BFS pour trouver les chemins augmentants.
+  - Complexité en O(VE²).
+
+- **Algorithme de Push-Relabel (Goldberg-Tarjan)**  
+  - Introduit la notion de préflot et utilise des opérations `push` et `relabel`.
+  - Complexité en O(V²E).
+
+#### 2.3 Applications
+- Optimisation des réseaux de transport
+- Gestion des flux de données dans les réseaux informatiques
+- Problèmes de planification et d'affectation
+
+---
+
+### 3. Problème de Couplage dans les Graphes Bipartis
+
+#### 3.1 Définition
+Un **couplage** dans un graphe est un sous-ensemble d'arêtes sans sommets en commun. Un couplage parfait couvre tous les sommets du graphe.
+
+#### 3.2 Algorithmes de Couplage Maximum
+
+- **Algorithme de Kuhn-Munkres (Hungarian Algorithm)**  
+  - Résout le problème d'affectation optimale en O(V³).
+
+- **Algorithme de Hopcroft-Karp**  
+  - Trouve un couplage maximum dans un graphe biparti en O(E√V).
+
+- **Flot et couplage**  
+  - Un couplage maximum dans un graphe biparti peut être vu comme un problème de flot maximum en ajoutant une source et un puits.
+
+#### 3.3 Applications
+- Affectation de tâches aux travailleurs (Problème d'affectation)
+- Correspondance entre étudiants et projets
+- Mariages stables et allocation de ressources
+
+---
+
+### 4. Liens Entre Flot et Couplage
+
+- Un couplage maximum dans un graphe biparti peut être transformé en un problème de flot maximum.
+- L'algorithme de Hopcroft-Karp est basé sur des chemins augmentants similaires à ceux utilisés dans Ford-Fulkerson.
+- Les techniques de flot sont aussi utilisées dans des problèmes plus avancés comme les **problèmes de transport** et le **problème du voyageur de commerce**.
+
+---
+
+### 5. Conclusion
+Les algorithmes de flot et de couplage sont essentiels en algorithmique et en théorie des graphes, avec des applications pratiques dans plusieurs domaines, notamment la logistique, l'affectation de ressources et l'optimisation de réseaux.
+## 6.4. Coloration de Graphes et Applications
+
+### 6.4.1. Introduction
+La **coloration de graphes** est un problème fondamental en théorie des graphes qui consiste à attribuer une couleur à chaque sommet d'un graphe de manière à ce que deux sommets adjacents n'aient jamais la même couleur. Ce problème possède de nombreuses applications en informatique, en optimisation et en sciences sociales.
+
+### 6.4.2. Définition Formelle
+Un graphe \( G = (V, E) \) est dit **k-coloriable** s'il est possible d'attribuer à chaque sommet \( v \in V \) une couleur parmi \( k \) couleurs de manière que :
+\[
+\forall (u,v) \in E, \quad c(u) \neq c(v)
+\]
+où \( c(v) \) représente la couleur attribuée au sommet \( v \).
+
+Le plus petit nombre de couleurs nécessaires pour colorier un graphe \( G \) est appelé **nombre chromatique** et est noté \( \chi(G) \).
+
+### 6.4.3. Algorithmes de Coloration
+Plusieurs algorithmes existent pour résoudre le problème de coloration de graphes, parmi lesquels :
+
+#### a) Algorithme Glouton
+Cet algorithme attribue des couleurs de manière séquentielle aux sommets en suivant un ordre donné.
+1. Trier les sommets selon un critère (ex : degré décroissant).
+2. Assigner la plus petite couleur disponible à chaque sommet.
+3. Répéter pour tous les sommets.
+
+Bien que simple, cet algorithme ne garantit pas toujours une solution optimale.
+
+#### b) Algorithme DSATUR
+L'algorithme **DSATUR** (Degree of Saturation) est une amélioration de l'algorithme glouton. Il choisit à chaque étape le sommet ayant le plus grand nombre de couleurs distinctes dans ses voisins.
+
+#### c) Algorithmes Approximatifs et Métaheuristiques
+Lorsque le problème devient complexe, on utilise des approches heuristiques comme :
+- **Recuit simulé**
+- **Algorithmes génétiques**
+- **Programmation linéaire en nombres entiers**
+
+### 6.4.4. Applications de la Coloration de Graphes
+La coloration de graphes trouve des applications dans divers domaines, notamment :
+
+#### a) Planification d'Horaires
+Dans les universités et les écoles, la coloration de graphes est utilisée pour assigner des créneaux horaires aux examens de manière à éviter les conflits d'horaire entre étudiants.
+
+#### b) Attribution de Fréquences Radio
+Dans les télécommunications, la coloration est utilisée pour attribuer des fréquences radio de manière à minimiser les interférences entre émetteurs voisins.
+
+#### c) Cartographie et Coloration de Cartes
+La célèbre **conjecture des quatre couleurs**, qui stipule que toute carte plane peut être coloriée avec au plus quatre couleurs, est un problème classique de coloration de graphes.
+
+#### d) Allocation de Registres en Compilation
+En compilation, la coloration de graphes est utilisée pour optimiser l'allocation des registres en minimisant les conflits d'accès aux ressources.
+
+### 6.4.5. Conclusion
+Le problème de coloration de graphes est un domaine riche en théories et applications pratiques. Sa résolution efficace est un enjeu majeur en informatique et en optimisation combinatoire. Bien que plusieurs algorithmes existent, l’optimisation de la coloration reste un défi pour les grands graphes et les problèmes complexes.
+
