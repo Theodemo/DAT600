@@ -1305,6 +1305,68 @@ En compilation, la coloration de graphes est utilisée pour optimiser l'allocati
 ### 6.4.5. Conclusion
 Le problème de coloration de graphes est un domaine riche en théories et applications pratiques. Sa résolution efficace est un enjeu majeur en informatique et en optimisation combinatoire. Bien que plusieurs algorithmes existent, l’optimisation de la coloration reste un défi pour les grands graphes et les problèmes complexes.
 
+### 6.5. Tri topologique et ordonnancement
+
+Le **tri topologique** est un algorithme utilisé principalement pour organiser des tâches ou des éléments qui dépendent d'autres éléments dans un certain ordre. Il est appliqué aux graphes orientés acycliques (DAG - Directed Acyclic Graph). Le but du tri topologique est de produire un ordre linéaire des nœuds du graphe de sorte que, pour chaque arête `(u, v)`, le nœud `u` apparaisse avant le nœud `v` dans l'ordre.
+
+#### 6.5.1. Définition du Tri Topologique
+Le tri topologique d'un graphe orienté acyclique (DAG) consiste à établir un ordre linéaire de ses sommets, tel qu'aucune arête ne croise cet ordre.
+
+Formellement, étant donné un DAG `G(V, E)`, où `V` est l'ensemble des sommets et `E` est l'ensemble des arêtes, un **tri topologique** est un ordre des sommets `v1, v2, ..., vn` tel que pour chaque arête `(vi, vj)` dans `E`, `vi` apparaît avant `vj` dans l'ordre.
+
+#### 6.5.2. Conditions pour un Tri Topologique
+- Le graphe doit être **orienté** et **acyclique** (pas de cycles).
+- Un seul tri topologique peut ne pas être unique ; plusieurs ordres valides peuvent exister si le graphe permet plusieurs façons de dépendre entre les nœuds.
+
+#### 6.5.3. Méthodes de Tri Topologique
+Il existe plusieurs approches pour effectuer un tri topologique, parmi lesquelles :
+
+1. **Algorithme de Kahn (approche par degré entrant)**
+    - On commence par les nœuds sans prédécesseurs (degré entrant égal à zéro).
+    - On les retire du graphe et on met à jour les degrés entrants des nœuds voisins.
+    - On répète ce processus jusqu'à ce que tous les nœuds aient été traités.
+    
+    **Complexité :** O(V + E), où `V` est le nombre de sommets et `E` est le nombre d’arêtes du graphe.
+
+2. **Tri topologique basé sur une recherche en profondeur (DFS)**
+    - Effectuer une DFS sur le graphe.
+    - À la fin de chaque exploration d'un nœud, on ajoute le nœud à une pile.
+    - Le résultat final est l’ordre inversé de cette pile.
+
+    **Complexité :** O(V + E), similaire à l'algorithme de Kahn.
+
+#### 6.5.4. Applications du Tri Topologique
+Le tri topologique est largement utilisé dans des problèmes où il est nécessaire d'effectuer des tâches selon un ordre précis, par exemple :
+
+- **Ordonnancement de tâches :** Lorsqu'il existe des dépendances entre les tâches, le tri topologique permet de déterminer l'ordre dans lequel les tâches doivent être effectuées.
+- **Compilation de code :** Le processus de compilation de programmes peut être vu comme un ordonnancement de différentes étapes qui dépendent de l’ordre d’exécution.
+- **Gestion de dépendances dans les systèmes de gestion de paquets :** Dans des systèmes comme `apt` ou `yum`, le tri topologique est utilisé pour résoudre les dépendances entre les paquets.
+
+#### 6.5.5. Ordonnancement avec Dépendances
+L’**ordonnancement de tâches** est un problème classique dans de nombreux domaines tels que la gestion de projets, l’allocation des ressources dans les systèmes informatiques, et la planification de processus dans des systèmes embarqués.
+
+L'algorithme de tri topologique peut être utilisé pour :
+
+- **Estimer les dates d'échéance** : Lorsque les tâches ont des dépendances, le tri topologique peut être utilisé pour déterminer l'ordre dans lequel elles doivent être réalisées et planifier les échéances de chaque tâche en fonction de ces dépendances.
+- **Déterminer la durée minimale de l’exécution** : En utilisant le tri topologique, il est possible d’estimer combien de temps sera nécessaire pour accomplir l’ensemble des tâches, si chaque tâche prend un certain temps à exécuter et dépend d'autres tâches.
+
+#### 6.5.6. Exemple Pratique
+Imaginons un projet où différentes tâches doivent être réalisées dans un certain ordre. Voici un exemple simplifié avec les dépendances entre les tâches :
+
+| Tâche | Dépendances |
+|-------|-------------|
+| A     | -           |
+| B     | A           |
+| C     | A           |
+| D     | B, C        |
+
+Le tri topologique de ce projet nous donnera un ordre d'exécution des tâches, ici : **A → B → C → D**.
+
+#### 6.5.7. Conclusion
+Le tri topologique est un outil puissant pour résoudre des problèmes impliquant des dépendances et des ordonnancements. Sa mise en œuvre repose sur des graphes orientés acycliques et est couramment utilisée dans des domaines variés tels que l'ordonnancement de tâches, la gestion de projets, la compilation de code et bien d'autres.
+
+
+
 # 7. Algorithmes Probabilistes et Approximatifs
 
 Les algorithmes probabilistes utilisent des nombres aléatoires dans leur processus de décision pour améliorer leurs performances ou contourner certaines limitations des algorithmes déterministes. Ils sont particulièrement utiles lorsque les solutions exactes sont difficiles ou coûteuses à obtenir.
