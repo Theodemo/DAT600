@@ -529,6 +529,63 @@ def fibonacci(n):
 
 print(fibonacci(10))  # Résultat : 55
 ```
+### 5. Chaîne de multiplication de matrices
+
+#### Introduction
+La multiplication de matrices est une opération fondamentale en algèbre linéaire et en informatique. Lorsqu’on doit multiplier plusieurs matrices entre elles, le choix de l’ordre des multiplications peut fortement influencer le nombre d’opérations nécessaires. L'algorithme de **chaîne de multiplication de matrices** permet de trouver l'ordre optimal pour minimiser le coût en calculs.
+
+#### Problématique
+Étant donné une séquence de matrices \( A_1, A_2, ..., A_n \) de dimensions compatibles, la multiplication d'une matrice \( A_i \) de taille \( p_{i-1} \times p_i \) avec une matrice \( A_{i+1} \) de taille \( p_i \times p_{i+1} \) requiert \( p_{i-1} \times p_i \times p_{i+1} \) multiplications scalaires. 
+
+Le problème est donc de déterminer l’ordre optimal des parenthèses afin de minimiser le nombre total de multiplications.
+
+#### Formulation du Problème
+On définit une table **m[i, j]** où **m[i, j]** représente le coût minimal de multiplication des matrices \( A_i \) à \( A_j \). 
+
+La relation de récurrence est donnée par :
+
+\[
+m[i, j] = \min_{i \leq k < j} \left( m[i, k] + m[k+1, j] + p_{i-1} \times p_k \times p_j \right)
+\]
+
+où \( k \) est l’indice de partition optimale.
+
+#### Algorithme de Programmation Dynamique
+L’algorithme utilise une approche **bottom-up** pour remplir la table **m**. Voici l'algorithme sous forme de pseudo-code :
+
+```python
+# p est un tableau de dimensions des matrices
+# n est le nombre de matrices
+
+def matrix_chain_order(p):
+    n = len(p) - 1
+    m = [[0] * n for _ in range(n)]
+    s = [[0] * n for _ in range(n)]
+    
+    for l in range(2, n+1):  # Longueur de la chaîne
+        for i in range(n - l + 1):
+            j = i + l - 1
+            m[i][j] = float('inf')
+            for k in range(i, j):
+                q = m[i][k] + m[k+1][j] + p[i] * p[k+1] * p[j+1]
+                if q < m[i][j]:
+                    m[i][j] = q
+                    s[i][j] = k
+    
+    return m, s
+```
+
+#### Complexité
+L'algorithme utilise une boucle triple, ce qui entraîne une complexité en **O(n³)**, ce qui est optimal pour ce type de problème.
+
+#### Exemple d’Exécution
+Considérons 4 matrices de dimensions **10×30, 30×5, 5×60, 60×10**.
+
+- Entrée : `p = [10, 30, 5, 60, 10]`
+- Sortie : Coût optimal et matrice des partitions
+
+#### Conclusion
+La **chaîne de multiplication de matrices** est un exemple classique de l’utilisation de la programmation dynamique pour optimiser un problème combinatoire. Elle est utilisée dans diverses applications comme la compilation, l’optimisation de bases de données et l’intelligence artificielle.
 
 ### 4. Exemples Classiques de Programmation Dynamique
 
@@ -540,6 +597,7 @@ Ce problème consiste à trouver la plus longue sous-séquence commune entre deu
 
 #### c) **Problème du Rendu de Monnaie**
 Trouver le nombre minimal de pièces pour donner une somme spécifique en utilisant des pièces de valeurs données.
+
 
 ### 5. Complexité et Optimisation
 
