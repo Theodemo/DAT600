@@ -1,4 +1,5 @@
 <!-- TOC -->
+
 - [1. The Role of Algorithms in Computing](#1-the-role-of-algorithms-in-computing)
   - [1.1 Algorithms Exercices](#11-algorithms-exercices)
     - [1.1.1](#111)
@@ -429,6 +430,7 @@ Détecter si l'entrée est déjà triée avant de faire un tri complet
 Using Figure 2.4 as a model, illustrate the operation of merge sort on an array initially containing the sequence {41; 52; 26; 38; 57; 9; 49}
 
 ```python
+
 def merge(arr, left, mid, right):
     n1 = mid - left + 1  #length of arr[left,mid]
     n2 = right - mid  #lenght of arr[mid+1,right]
@@ -482,7 +484,47 @@ def merge_sort(arr, left, right):
 
 ```
 
----
+
+
+$$array=[41, 52, 26, 38, 57, 9, 49]$$
+
+```mermaid
+graph TD;
+
+    1["[41, 52, 26, 38, 57, 9, 49]"] --> A2.1["[41, 52, 26]"]
+    1 --> B2.2["[38, 57, 9, 49]"]
+    
+    A2.1 --> A3.1["[41]"]
+    A2.1 --> A3.2["[52, 26]"]
+
+    A3.2 --> A4.1["[52]"]
+    A3.2 --> A4.2["[26]"]
+
+    A4.1 --> A5.1["[26,52]"]
+    A5.1 --> A6.1["[26,41,52]"]
+    A4.2 --> A5.1
+    A3.1 --> A6.1
+
+    B2.2 --> B3.1["[38,57]"]
+    B2.2 --> B3.2["[9,49]"]
+
+    B3.1 --> B4.1["[38]"]
+    B3.1 --> B4.2["[57]"]
+    B3.2 --> B4.3["[9]"]
+    B3.2 --> B4.4["[49]"]
+
+    B4.1 --> B5.1["[38,57]"]
+    B4.2 --> B5.1
+    B4.3 --> B5.2["[9,49]"]
+    B4.4 --> B5.2
+
+    B5.1 --> B6.1["[9,38,49,57]"]
+    B5.2 -->B6.1
+
+    B6.1 --> F["[9,26,38,41,49,52,57]"]
+    A6.1 --> F
+
+```
 
 ### 2.3.2
 
