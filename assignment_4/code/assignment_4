@@ -1,0 +1,24 @@
+import pulp
+
+# Define the LP problem
+prob = pulp.LpProblem("Maximize_Profit", pulp.LpMaximize)
+
+# Decision variables
+x = pulp.LpVariable('x', lowBound=10, cat='Continuous')  # Must be at least 10
+y = pulp.LpVariable('y', lowBound=0, cat='Continuous')
+
+# Objective function (maximize profit)
+prob += 168.333 * x + 256.666 * y
+
+# Constraints
+prob += 15 * x + 20 * y <= 2400  # Machine time in minutes
+prob += 20 * x + 30 * y <= 2100  # Craftsman time in minutes
+
+# Solve the problem
+prob.solve()
+
+# Output the results
+print(f"Status: {pulp.LpStatus[prob.status]}")
+print(f"Produce {x.varValue:.2f} units of X")
+print(f"Produce {y.varValue:.2f} units of Y")
+print(f"Maximum Profit: £{pulp.value(prob.objective):.2f}")
